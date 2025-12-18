@@ -1,481 +1,567 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-	<title>ZYQTRON — Analyse stratégique, Cybersécurité, Actifs Monétisables THKL & Moteur de Certitude</title>
-	<meta name="description" content="Cabinet d'analyse stratégique : obtenez un diagnostic structuré en Cybersécurité, Juridique, Patrimonial (VALUATOR™) ou Technologie & IA. Actifs Monétisables THKL + Moteur de Certitude, XAI & Audit Log." />
-	<meta name="keywords" content="Analyse stratégique,Cybersécurité,Actifs Monétisables THKL,Moteur de Certitude,Transfert de Savoir-faire Industrialisé,XAI,Audit Log,diagnostic,conseil B2B" />
-	<meta name="robots" content="index,follow,max-image-preview:large" />
-	<meta name="language" content="fr" /><meta name="author" content="ZYQTRON" /><meta name="creator" content="ZYQTRON" /><meta name="theme-color" content="#000000" />
-
-	<link rel="canonical" href="https://zyqtron.com/" />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="ZYQTRON — Activez le Moteur de Certitude" />
-	<meta property="og:description" content="Analyse stratégique & diagnostics structurés (Cybersécurité, Juridique, Patrimonial, Technologie & IA). Actifs Monétisables THKL + XAI & Audit Log." />
-	<meta property="og:locale" content="fr_FR" />
-	<meta name="twitter:card" content="summary_large_image" />
-
-	<link rel="preconnect" href="https://cdn.tailwindcss.com" />
-	<link rel="preconnect" href="https://unpkg.com" />
-	<link rel="dns-prefetch" href="https://cloud.activepieces.com" />
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script>
-		tailwind.config = {
-			theme: {
-				extend: {
-					fontFamily: {
-						sans: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji']
-					}
-				}
-			}
-		}
-	</script>
-
-	<script src="https://unpkg.com/lucide@latest"></script>
-
-	<script>
-		const WEBHOOK_URL = "https://cloud.activepieces.com/api/v1/webhooks/T1hNF3kfYQfat81GVqRLU";
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validation Email plus robuste
-
-		function envoyerVersActivepieces(email, univers, statut) {
-			const urlFinale = `${WEBHOOK_URL}?email=${encodeURIComponent(email)}&univers=${encodeURIComponent(univers)}&statut=${encodeURIComponent(statut)}`;
-
-			fetch(urlFinale, { method: 'GET', mode: 'no-cors' })
-				.then(() => {
-					alert("✅ Votre demande a été enregistrée par ZYQTRON. Un assistant va prendre contact avec vous sur " + email);
-				})
-				.catch(err => {
-					console.error(err);
-					alert("Erreur de connexion. Veuillez réessayer ou nous écrire à contact@zyqtron.com");
-				});
-		}
-
-		function capturerLead(statutClient) {
-			const universActif = document.getElementById('diag-title').textContent;
-			
-			const emailClient = prompt(`Pour recevoir votre pré-diagnostic ${universActif}, merci de renseigner votre email :`);
-
-			// Validation Email Regex (Correction Perplexity)
-			if (emailClient && emailRegex.test(emailClient)) {
-				envoyerVersActivepieces(emailClient, universActif, statutClient);
-			} else if (emailClient) {
-				alert("L'email semble invalide. Merci de réessayer.");
-			}
-		}
-	</script>
-
-	<script type="application/ld+json">
-	[
-		{
-			"@context": "https://schema.org",
-			"@type": "Organization",
-			"name": "ZYQTRON",
-			"url": "https://zyqtron.com/",
-			"email": "contact@zyqtron.com",
-			"telephone": "+33 X XX XX XX XX", // Placeholder : à remplacer par ton numéro de téléphone
-			"areaServed": "FR",
-			"sameAs": [
-				"https://www.linkedin.com/company/zyqtron" // Placeholder : à remplacer par ta page LinkedIn
-			],
-			"logo": {
-				"@type": "ImageObject",
-				"url": "https://zyqtron.com/logo.png", // Placeholder : si tu ajoutes un logo
-				"width": 1200,
-				"height": 630
-			},
-			"description": "Cabinet d'analyse stratégique : diagnostics structurés en Cybersécurité, Juridique, Patrimonial et Technologie & IA. Actifs Monétisables THKL (Transfert de Savoir-faire Industrialisé) + Moteur de Certitude, XAI & Audit Log.",
-			"knowsAbout": [
-				"Analyse stratégique",
-				"Cybersécurité",
-				"Actifs Monétisables THKL",
-				"Moteur de Certitude",
-				"Explicabilité (XAI)",
-				"Audit Log",
-				"Diagnostic B2B"
-			]
-		},
-		{ // Schéma SERVICE pour le SEO (Ajout Perplexity)
-			"@context": "https://schema.org",
-			"@type": "Service",
-			"name": "Diagnostic Cybersécurité",
-			"description": "Audit, protection et sécurisation de vos actifs numériques",
-			"provider": { "@type": "Organization", "name": "ZYQTRON" },
-			"areaServed": "FR"
-		},
-		{
-			"@context": "https://schema.org",
-			"@type": "Service",
-			"name": "Diagnostic Juridique",
-			"description": "Analyse, gestion des litiges et mise en conformité réglementaire",
-			"provider": { "@type": "Organization", "name": "ZYQTRON" },
-			"areaServed": "FR"
-		},
-		{
-			"@context": "https://schema.org",
-			"@type": "Service",
-			"name": "Diagnostic Patrimonial (VALUATOR™)",
-			"description": "Évaluation et stratégies d'optimisation (via VALUATOR™)",
-			"provider": { "@type": "Organization", "name": "ZYQTRON" },
-			"areaServed": "FR"
-		},
-		{
-			"@context": "https://schema.org",
-			"@type": "Service",
-			"name": "Diagnostic Technologie & IA",
-			"description": "Intégration et conseil en solutions technologiques et XAI",
-			"provider": { "@type": "Organization", "name": "ZYQTRON" },
-			"areaServed": "FR"
-		}
-	]
-	</script>
-
-	<style>
-		:focus-visible { outline: 2px solid rgb(16 185 129); outline-offset: 3px; }
-		/* Tailwind Customizations pour les tooltips */
-		.tooltip-content {
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.2s, visibility 0.2s;
-			z-index: 10;
-		}
-		.group:hover .tooltip-content,
-		.group:focus-within .tooltip-content {
-			opacity: 1;
-			visibility: visible;
-		}
-		/* Règle pour l'accessibilité scroll */
-		@media (prefers-reduced-motion: reduce) {
-			html { scroll-behavior: auto; }
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZYQTRON — Analyse Stratégique, Cybersécurité, Actifs THKL</title>
+    <meta name="description" content="Diagnostic structuré en 30min: Cybersécurité, Juridique, Patrimonial, Technologie & IA. 401 prestations B2B. Tarification transparente.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --color-primary: #D4A574;
+            --color-dark: #1a1a1a;
+            --color-light: #f5f5f5;
+            --color-accent: #ffd700;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--color-dark);
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            padding: 2rem 1rem;
+            border-bottom: 1px solid var(--color-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        header .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: rgba(212, 165, 116, 0.2);
+        }
+        
+        main {
+            padding: 3rem 1rem;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+        
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .stat-box {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid var(--color-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #bbb;
+            margin-top: 0.5rem;
+        }
+        
+        .universes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border: 1px solid var(--color-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.2);
+        }
+        
+        .card h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card p {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            background: rgba(212, 165, 116, 0.2);
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: var(--color-dark);
+        }
+        
+        .search-box {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .search-box input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.8rem;
+            border: 1px solid var(--color-primary);
+            border-radius: 6px;
+            background: rgba(212, 165, 116, 0.1);
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .search-box input::placeholder {
+            color: #777;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .service-card {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            border-color: var(--color-primary);
+            background: rgba(212, 165, 116, 0.1);
+        }
+        
+        .service-id {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 0.3rem;
+        }
+        
+        .service-name {
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-desc {
+            font-size: 0.9rem;
+            color: #bbb;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .pricing-tiers {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .tier {
+            background: rgba(212, 165, 116, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--color-primary);
+        }
+        
+        .tier-label {
+            font-weight: bold;
+            color: #fff;
+            display: block;
+        }
+        
+        .contact-btn {
+            background: var(--color-primary);
+            color: var(--color-dark);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .contact-btn:hover {
+            background: var(--color-accent);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            background: var(--color-dark);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid var(--color-primary);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+        }
+        
+        .close {
+            color: var(--color-primary);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--color-accent);
+        }
+        
+        .modal h2 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .modal input,
+        .modal select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--color-primary);
+            border-radius: 6px;
+            background: rgba(212, 165, 116, 0.1);
+            color: #fff;
+        }
+        
+        .modal button {
+            background: var(--color-primary);
+            color: var(--color-dark);
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+        
+        .modal button:hover {
+            background: var(--color-accent);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            border-top: 1px solid var(--color-primary);
+            padding: 2rem 1rem;
+            text-align: center;
+            color: #888;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            nav { display: none; }
+            .universes { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
-<body class="bg-black text-white font-sans antialiased">
-	<div aria-hidden="true" class="pointer-events-none fixed inset-0">
-		<div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"></div>
-		<div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-400/5 blur-3xl"></div>
-		<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),rgba(0,0,0,0)_55%)]"></div>
-	</div>
-
-	<header class="relative">
-		<div class="mx-auto max-w-6xl px-6 py-10 md:py-14">
-			<div class="flex items-start justify-between gap-6">
-				<div class="flex items-center gap-3">
-					<span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-400/20">
-						<i data-lucide="sparkles" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-					</span>
-					<div>
-						<div class="text-sm tracking-widest text-emerald-300/90">ZYQTRON</div>
-						<div class="text-xs text-white/60">Moteur de Certitude • XAI • Audit Log</div>
-					</div>
-				</div>
-
-				<div class="hidden md:flex items-center gap-3">
-					<a href="#univers" class="rounded-xl bg-white/5 px-4 py-2 text-sm text-white/80 ring-1 ring-white/10 hover:bg-white/10">
-						Choisir un univers
-					</a>
-					<a href="#diagnostic" class="rounded-xl bg-emerald-500/15 px-4 py-2 text-sm text-emerald-200 ring-1 ring-emerald-400/25 hover:bg-emerald-500/20">
-						Accéder au diagnostic
-					</a>
-				</div>
-			</div>
-
-			<div class="mt-10 md:mt-14">
-				<h1 class="text-balance text-4xl font-semibold leading-tight md:text-6xl">
-					L'incertitude est votre seule menace. <span class="text-emerald-300">Activez ZYQTRON.</span>
-				</h1>
-				
-				<p class="mt-5 max-w-3xl text-pretty text-base leading-relaxed text-white/75 md:text-lg">
-					<span class="text-emerald-200">Cabinet d'analyse stratégique.</span>
-					En **30 minutes**, recevez un diagnostic décisionnel couvrant
-					<span class="text-emerald-300">Cybersécurité, Juridique, Patrimoine ou Technologie & IA</span>
-					– avec preuve d'audit et recommandations priorisées.
-				</p>
-				<div class="mt-8 grid gap-4 md:grid-cols-3">
-					<div class="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10">
-						<div class="flex items-center gap-3">
-							<i data-lucide="check-circle-2" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-							<p class="text-sm font-medium text-white/90">Diagnostic structuré</p>
-						</div>
-						<p class="mt-2 text-sm text-white/65">
-							Une réponse claire, actionnable, et priorisée pour décider vite.
-						</p>
-					</div>
-
-					<div class="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10">
-						<div class="flex items-center gap-3">
-							<i data-lucide="shield-check" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-							<p class="text-sm font-medium text-white/90">Approche B2B orientée ROI</p>
-						</div>
-						<p class="mt-2 text-sm text-white/65">
-							Optimisation, réduction du risque, et création de valeur mesurable.
-						</p>
-					</div>
-
-					<div class="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10">
-						<div class="flex items-center gap-3">
-							<i data-lucide="brain-circuit" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-							<p class="text-sm font-medium text-white/90">Moteur de Certitude</p>
-						</div>
-						<p class="mt-2 text-sm text-white/65">
-							Chaque recommandation s'appuie sur une traçabilité complète (Audit Log)
-							+ une explication intelligible (XAI) : pas de "boîte noire".
-						</p>
-						</div>
-				</div>
-
-				<div class="mt-8 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 p-5">
-					<div class="flex items-start gap-3">
-						<i data-lucide="badge-check" class="mt-0.5 h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-						<p class="text-sm leading-relaxed text-white/80">
-							<span class="font-semibold text-emerald-200">Message de Confiance :</span>
-							Tous nos diagnostics s'appuient sur l'Explicabilité (XAI) et l'Audit Log pour garantir une preuve structurée et fiable.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-
-	<main class="relative">
-		<section id="univers" class="mx-auto max-w-6xl px-6 pb-10 pt-2 md:pb-14">
-			<div class="flex items-end justify-between gap-6">
-				<div>
-					<h2 class="text-2xl font-semibold md:text-3xl">Choisissez votre univers</h2>
-					<p class="mt-2 max-w-2xl text-sm text-white/65 md:text-base">
-						Cliquez sur une carte pour ouvrir la zone de diagnostic et déclencher la capture de lead.
-					</p>
-				</div>
-				<div class="hidden md:block text-xs text-white/50">
-					SEO : Analyse stratégique • Cybersécurité • Actifs Monétisables THKL • Moteur de Certitude
-				</div>
-			</div>
-
-			<div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-				<button
-					type="button"
-					class="group text-left rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-emerald-400/25 focus-visible:ring-emerald-400/40"
-					onclick="ouvrirDiagnostic('Cybersécurité')"
-					aria-label="Ouvrir le diagnostic Cybersécurité"
-				>
-					<div class="flex items-start justify-between gap-3">
-						<div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-400/20">
-							<i data-lucide="shield" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-						</div>
-						<span class="text-xs text-white/50 group-hover:text-white/70">Cliquez</span>
-					</div>
-					<h3 class="mt-4 text-lg font-semibold text-white">Cybersécurité</h3>
-					<p class="mt-2 text-sm text-white/65">
-						Audit, protection et sécurisation de vos actifs numériques.
-					</p>
-					<p class="mt-2 text-xs text-emerald-200/80">
-						📋 Vous recevrez : matrice de risques prioritaires + plan d'action
-					</p>
-				</button>
-
-				<button
-					type="button"
-					class="group text-left rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-emerald-400/25 focus-visible:ring-emerald-400/40"
-					onclick="ouvrirDiagnostic('Juridique')"
-					aria-label="Ouvrir le diagnostic Juridique"
-				>
-					<div class="flex items-start justify-between gap-3">
-						<div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-400/20">
-							<i data-lucide="scale" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-						</div>
-						<span class="text-xs text-white/50 group-hover:text-white/70">Cliquez</span>
-					</div>
-					<h3 class="mt-4 text-lg font-semibold text-white">Juridique</h3>
-					<p class="mt-2 text-sm text-white/65">
-						Analyse, gestion des litiges et mise en conformité réglementaire.
-					</p>
-					<p class="mt-2 text-xs text-emerald-200/80">
-						📋 Vous recevrez : checklist de conformité + évaluation de litige
-					</p>
-				</button>
-
-				<button
-					type="button"
-					class="group text-left rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-emerald-400/25 focus-visible:ring-emerald-400/40"
-					onclick="ouvrirDiagnostic('Patrimonial')"
-					aria-label="Ouvrir le diagnostic Patrimonial"
-				>
-					<div class="flex items-start justify-between gap-3">
-						<div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-400/20">
-							<i data-lucide="wallet" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-						</div>
-						<span class="text-xs text-white/50 group-hover:text-white/70">Cliquez</span>
-					</div>
-					<h3 class="mt-4 text-lg font-semibold text-white">Patrimonial</h3>
-					<p class="mt-2 text-sm text-white/65">
-						Évaluation et stratégies d'optimisation (via VALUATOR™).
-					</p>
-					<p class="mt-2 text-xs text-emerald-200/80">
-						📋 Vous recevrez : score de risque/liquidité + 3 actions d'optimisation
-					</p>
-				</button>
-
-				<button
-					type="button"
-					class="group text-left rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-emerald-400/25 focus-visible:ring-emerald-400/40"
-					onclick="ouvrirDiagnostic('Technologie & IA')"
-					aria-label="Ouvrir le diagnostic Technologie et IA"
-				>
-					<div class="flex items-start justify-between gap-3">
-						<div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-400/20">
-							<i data-lucide="bot" class="h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-						</div>
-						<span class="text-xs text-white/50 group-hover:text-white/70">Cliquez</span>
-					</div>
-					<h3 class="mt-4 text-lg font-semibold text-white">Technologie & IA</h3>
-					<p class="mt-2 text-sm text-white/65">
-						Intégration et conseil en solutions technologiques et XAI.
-					</p>
-					<p class="mt-2 text-xs text-emerald-200/80">
-						📋 Vous recevrez : audit de maturité IA + proposition de pipeline simplifiée
-					</p>
-				</button>
-			</div>
-		</section>
-
-		<section id="diagnostic" class="mx-auto max-w-6xl px-6 pb-16">
-			<div class="rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 md:p-10">
-				<div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-					<div>
-						<div class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1 text-xs text-emerald-200 ring-1 ring-emerald-400/20">
-							<i data-lucide="radar" class="h-4 w-4" aria-hidden="true"></i>
-							Zone de diagnostic
-						</div>
-
-						<h3 class="mt-4 text-2xl font-semibold md:text-3xl">
-							Pré-diagnostic : <span id="diag-title" class="text-emerald-300">Sélectionnez un univers</span>
-						</h3>
-
-						<p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
-							Choisissez votre statut pour déclencher la collecte et recevoir un pré-diagnostic structuré basé sur nos Actifs Monétisables THKL
-							et notre approche d’explicabilité (XAI) + Audit Log.
-						</p>
-					</div>
-
-					<div class="md:text-right">
-						<div class="text-xs text-white/55">Contact direct</div>
-						<div class="mt-1 inline-flex items-center gap-2 text-sm text-white/80">
-							<i data-lucide="mail" class="h-4 w-4 text-emerald-300" aria-hidden="true"></i>
-							<a class="hover:text-emerald-200" href="mailto:contact@zyqtron.com">contact@zyqtron.com</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="mt-8 space-y-4">
-					<p class="text-xs text-white/60 text-center">
-						**Quel est votre profil ?** (cela détermine nos priorités d'analyse)
-					</p>
-					<div class="grid gap-3 sm:grid-cols-3">
-						<button
-							type="button"
-							id="btn-particulier"
-							onclick="capturerLead('Particulier')"
-							disabled
-							class="relative group"
-						>
-							<div class="inline-flex items-center justify-center gap-2 w-full rounded-2xl bg-white/5 px-5 py-4 text-sm font-medium text-white ring-1 ring-white/10 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40">
-								<i data-lucide="user" class="h-4 w-4 text-emerald-300" aria-hidden="true"></i>
-								Particulier
-							</div>
-							<div class="tooltip-content absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-white/70 bg-white/10 rounded-lg px-3 py-1 whitespace-nowrap">
-								Entrepreneur, consultant indépendant
-							</div>
-						</button>
-
-						<button
-							type="button"
-							id="btn-pro"
-							onclick="capturerLead('Professionnel')"
-							disabled
-							class="relative group"
-						>
-							<div class="inline-flex items-center justify-center gap-2 w-full rounded-2xl bg-emerald-500/15 px-5 py-4 text-sm font-medium text-emerald-100 ring-1 ring-emerald-400/25 transition hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-40">
-								<i data-lucide="briefcase" class="h-4 w-4 text-emerald-300" aria-hidden="true"></i>
-								Professionnel
-							</div>
-							<div class="tooltip-content absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-white/70 bg-white/10 rounded-lg px-3 py-1 whitespace-nowrap">
-								PME, GE, Direction
-							</div>
-						</button>
-
-						<button
-							type="button"
-							id="btn-urgence"
-							onclick="capturerLead('URGENCE')"
-							disabled
-							class="relative group"
-						>
-							<div class="inline-flex items-center justify-center gap-2 w-full rounded-2xl bg-red-500/15 px-5 py-4 text-sm font-medium text-red-100 ring-1 ring-red-400/25 transition hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-40">
-								<i data-lucide="siren" class="h-4 w-4 text-red-300" aria-hidden="true"></i>
-								URGENCE
-							</div>
-							<div class="tooltip-content absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-white/70 bg-white/10 rounded-lg px-3 py-1 whitespace-nowrap">
-								Crise, incident détecté
-							</div>
-						</button>
-					</div>
-				</div>
-				<div class="mt-6 rounded-2xl border border-white/10 bg-black/40 p-4">
-					<div class="flex items-start gap-3">
-						<i data-lucide="file-lock-2" class="mt-0.5 h-5 w-5 text-emerald-300" aria-hidden="true"></i>
-						<p class="text-sm text-white/70">
-							<span class="font-semibold text-white/90">Conformité & traçabilité :</span>
-							chaque demande est journalisée (Audit Log) et rendue explicable (XAI) afin de produire un diagnostic vérifiable,
-							utile en interne comme en contexte B2B.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-
-	<footer class="relative border-t border-white/10">
-		<div class="mx-auto max-w-6xl px-6 py-10">
-			<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-				<div class="text-sm text-white/60">
-					© <span id="year"></span> ZYQTRON — Analyse stratégique • Cybersécurité • Actifs Monétisables THKL • Moteur de Certitude
-				</div>
-				<div class="flex items-center gap-4 text-sm">
-					<a class="text-white/70 hover:text-emerald-200" href="#univers">Univers</a>
-					<a class="text-white/70 hover:text-emerald-200" href="#diagnostic">Diagnostic</a>
-					<a class="text-white/70 hover:text-emerald-200" href="mailto:contact@zyqtron.com">Contact</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<script>
-		// Init icons
-		lucide.createIcons();
-
-		// Year
-		document.getElementById('year').textContent = new Date().getFullYear();
-
-		// UX: ouvrir diagnostic + activer boutons
-		function ouvrirDiagnostic(univers) {
-			const title = document.getElementById('diag-title');
-			title.textContent = univers;
-
-			// Enable buttons once a universe is selected
-			document.getElementById('btn-particulier').disabled = false;
-			document.getElementById('btn-pro').disabled = false;
-			document.getElementById('btn-urgence').disabled = false;
-
-			// Scroll to diagnostic (Accessibilité améliorée)
-			const section = document.getElementById('diagnostic');
-			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			section.scrollIntoView({ 
-				behavior: prefersReducedMotion ? 'auto' : 'smooth', 
-				block: 'start' 
-			});
-		}
-	</script>
+<body>
+    <header>
+        <div class="container">
+            <div class="flex">
+                <div class="logo">🛡️ ZYQTRON</div>
+                <nav>
+                    <a href="#univers">Univers</a>
+                    <a href="#catalogue">Catalogue</a>
+                    <a href="#tarifs">Tarifs</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>Le Moteur de Certitude</h1>
+            <p class="hero-desc">
+                Diagnostic B2B structuré en 30 minutes. Cybersécurité • Juridique • Patrimonial • Technologie & IA.
+                <br>401 prestations. Tarification transparente.
+            </p>
+        </section>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">401</div>
+                <div class="stat-label">Prestations</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">16</div>
+                <div class="stat-label">Thèmes</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Univers</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">B2B</div>
+            </div>
+        </div>
+        
+        <section id="univers" style="margin: 3rem 0;">
+            <h2 class="section-title">Choisissez votre univers</h2>
+            <div class="universes">
+                <div class="card" onclick="filterByTheme('Cybersécurité')">
+                    <h3>🔒 Cybersécurité</h3>
+                    <p>Diagnostic audit, SOC/MDR, conformité, architecture sécurité</p>
+                </div>
+                <div class="card" onclick="filterByTheme('THKL')">
+                    <h3>💼 Actifs THKL</h3>
+                    <p>Valorisation, licensing, transfer de savoir-faire industrialisé</p>
+                </div>
+                <div class="card" onclick="filterByTheme('IA')">
+                    <h3>🤖 IA & Technologie</h3>
+                    <p>Recherche, documentation, go-to-market assistés par IA</p>
+                </div>
+                <div class="card" onclick="filterByTheme('Stratégie')">
+                    <h3>📊 Stratégie & GTM</h3>
+                    <p>Positionnement, pricing, commercialisation, marketing</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="catalogue" style="margin: 3rem 0;">
+            <h2 class="section-title">Catalogue complet</h2>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Chercher une prestation..." onkeyup="filterServices()">
+            </div>
+            
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterByTheme('TOUS')">TOUS (401)</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 1')">THÈME 1</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 2')">THÈME 2</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 3')">THÈME 3</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 4')">THÈME 4</button>
+            </div>
+            
+            <div id="servicesContainer" class="services-grid"></div>
+        </section>
+    </main>
+    
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Demande de devis</h2>
+            <form onsubmit="submitLead(event)">
+                <input type="text" id="leadName" placeholder="Nom complet" required>
+                <input type="email" id="leadEmail" placeholder="Email professionnel" required>
+                <input type="text" id="leadCompany" placeholder="Entreprise" required>
+                <select id="leadStatus" required>
+                    <option value="">-- Statut --</option>
+                    <option value="Particulier">Particulier</option>
+                    <option value="PME">PME</option>
+                    <option value="ETI">ETI</option>
+                    <option value="Grand groupe">Grand groupe</option>
+                    <option value="URGENCE">URGENCE</option>
+                </select>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 ZYQTRON — Analyse Stratégique • Cybersécurité • Actifs THKL</p>
+        <p><a href="mailto:contact@zyqtron.com" style="color: var(--color-primary); text-decoration: none;">contact@zyqtron.com</a></p>
+    </footer>
+    
+    <script>
+        let allServices = [];
+        let currentFilter = 'TOUS';
+        
+        async function loadCatalog() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                allServices = data.services || [];
+                renderServices();
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('servicesContainer').innerHTML = '<p style="color: red;">Erreur chargement catalogue</p>';
+            }
+        }
+        
+        function renderServices() {
+            const container = document.getElementById('servicesContainer');
+            const searchTerm = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+            
+            let filtered = allServices;
+            
+            if (currentFilter !== 'TOUS') {
+                filtered = filtered.filter(s => s.theme?.includes(currentFilter));
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(s => 
+                    s.name?.toLowerCase().includes(searchTerm) ||
+                    s.description?.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            container.innerHTML = filtered.map(service => `
+                <div class="service-card">
+                    <div class="service-id">ID #${service.id}</div>
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-desc">${service.description?.substring(0, 100)}...</div>
+                    
+                    <div class="pricing-tiers">
+                        ${service.pricing_bronze ? `<div class="tier"><span class="tier-label">Bronze:</span> €${service.pricing_bronze}</div>` : ''}
+                        ${service.pricing_argent ? `<div class="tier"><span class="tier-label">Argent:</span> €${service.pricing_argent}</div>` : ''}
+                        ${service.pricing_or ? `<div class="tier"><span class="tier-label">Or:</span> €${service.pricing_or}</div>` : ''}
+                    </div>
+                    
+                    <button class="contact-btn" onclick="openContactModal()">Demander un devis</button>
+                </div>
+            `).join('');
+        }
+        
+        function filterByTheme(theme) {
+            currentFilter = theme;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event?.target?.classList.add('active');
+            renderServices();
+        }
+        
+        function filterServices() {
+            renderServices();
+        }
+        
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+        
+        function submitLead(e) {
+            e.preventDefault();
+            const lead = {
+                name: document.getElementById('leadName').value,
+                email: document.getElementById('leadEmail').value,
+                company: document.getElementById('leadCompany').value,
+                status: document.getElementById('leadStatus').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            alert('✅ Demande envoyée! Nous vous contactons sous 24h.');
+            closeModal();
+            document.querySelector('form').reset();
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        window.addEventListener('load', loadCatalog);
+    </script>
 </body>
 </html>
