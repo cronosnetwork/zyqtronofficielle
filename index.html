@@ -17,14 +17,16 @@
             --color-dark: #1a1a1a;
             --color-light: #f5f5f5;
             --color-accent: #ffd700;
+            --color-danger: #dc2626;
             font-size: 16px;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background: var(--color-dark);
             color: #fff;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         header {
@@ -63,9 +65,11 @@
         nav a {
             color: #fff;
             text-decoration: none;
+            font-size: 0.9rem;
             padding: 0.5rem 1rem;
             border-radius: 6px;
             transition: background 0.3s;
+            cursor: pointer;
         }
         
         nav a:hover {
@@ -263,20 +267,47 @@
             display: block;
         }
         
-        .contact-btn {
-            background: var(--color-primary);
-            color: var(--color-dark);
+        .tier-devis {
+            background: rgba(220, 38, 38, 0.3);
+            color: #dc2626;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.7rem;
+            flex-direction: column;
+        }
+        
+        .btn {
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-dark);
             width: 100%;
         }
         
-        .contact-btn:hover {
+        .btn-primary:hover {
             background: var(--color-accent);
+        }
+        
+        .btn-secondary {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(212, 165, 116, 0.3);
         }
         
         .modal {
@@ -288,6 +319,12 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .modal-content {
@@ -298,6 +335,14 @@
             border-radius: 12px;
             width: 90%;
             max-width: 600px;
+            animation: slideIn 0.3s;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         .close {
@@ -318,7 +363,8 @@
         }
         
         .modal input,
-        .modal select {
+        .modal select,
+        .modal textarea {
             width: 100%;
             padding: 0.8rem;
             margin-bottom: 1rem;
@@ -326,6 +372,16 @@
             border-radius: 6px;
             background: rgba(212, 165, 116, 0.1);
             color: #fff;
+        }
+        
+        .modal textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .modal input::placeholder,
+        .modal textarea::placeholder {
+            color: #777;
         }
         
         .modal button {
@@ -343,6 +399,47 @@
             background: var(--color-accent);
         }
         
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+        
+        .checkbox-group label {
+            color: #ddd;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .pricing-table th,
+        .pricing-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+        }
+        
+        .pricing-table th {
+            background: rgba(212, 165, 116, 0.1);
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+        
+        .pricing-table tr:hover {
+            background: rgba(212, 165, 116, 0.05);
+        }
+        
         footer {
             background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
             border-top: 1px solid var(--color-primary);
@@ -350,6 +447,28 @@
             text-align: center;
             color: #888;
             margin-top: 3rem;
+        }
+        
+        footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-info {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .contact-info p {
+            margin: 0.5rem 0;
         }
         
         @media (max-width: 768px) {
@@ -366,10 +485,10 @@
             <div class="flex">
                 <div class="logo">🛡️ ZYQTRON</div>
                 <nav>
-                    <a href="#univers">Univers</a>
-                    <a href="#catalogue">Catalogue</a>
-                    <a href="#tarifs">Tarifs</a>
-                    <a href="#contact">Contact</a>
+                    <a onclick="scrollToSection('univers')">Univers</a>
+                    <a onclick="scrollToSection('catalogue')">Catalogue</a>
+                    <a onclick="openModal('tarifModal')">Tarifs</a>
+                    <a onclick="openModal('contactModal')">Contact</a>
                 </nav>
             </div>
         </div>
@@ -406,19 +525,19 @@
         <section id="univers" style="margin: 3rem 0;">
             <h2 class="section-title">Choisissez votre univers</h2>
             <div class="universes">
-                <div class="card" onclick="filterByTheme('Cybersécurité')">
+                <div class="card" onclick="filterByTheme('THÈME 1')">
                     <h3>🔒 Cybersécurité</h3>
                     <p>Diagnostic audit, SOC/MDR, conformité, architecture sécurité</p>
                 </div>
-                <div class="card" onclick="filterByTheme('THKL')">
+                <div class="card" onclick="filterByTheme('THÈME 1')">
                     <h3>💼 Actifs THKL</h3>
                     <p>Valorisation, licensing, transfer de savoir-faire industrialisé</p>
                 </div>
-                <div class="card" onclick="filterByTheme('IA')">
+                <div class="card" onclick="filterByTheme('THÈME 3')">
                     <h3>🤖 IA & Technologie</h3>
                     <p>Recherche, documentation, go-to-market assistés par IA</p>
                 </div>
-                <div class="card" onclick="filterByTheme('Stratégie')">
+                <div class="card" onclick="filterByTheme('THÈME 4')">
                     <h3>📊 Stratégie & GTM</h3>
                     <p>Positionnement, pricing, commercialisation, marketing</p>
                 </div>
@@ -433,49 +552,145 @@
             </div>
             
             <div class="filters">
-                <button class="filter-btn active" onclick="filterByTheme('TOUS')">TOUS (401)</button>
+                <button class="filter-btn active" onclick="filterByTheme('TOUS')">TOUS</button>
                 <button class="filter-btn" onclick="filterByTheme('THÈME 1')">THÈME 1</button>
                 <button class="filter-btn" onclick="filterByTheme('THÈME 2')">THÈME 2</button>
                 <button class="filter-btn" onclick="filterByTheme('THÈME 3')">THÈME 3</button>
                 <button class="filter-btn" onclick="filterByTheme('THÈME 4')">THÈME 4</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 11')">THÈME 11</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 13')">THÈME 13</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 14')">THÈME 14</button>
+                <button class="filter-btn" onclick="filterByTheme('THÈME 15')">THÈME 15</button>
             </div>
             
             <div id="servicesContainer" class="services-grid"></div>
         </section>
     </main>
     
+    <!-- MODAL TARIFS -->
+    <div id="tarifModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('tarifModal')">&times;</span>
+            <h2>Grille Tarifaire</h2>
+            <p style="color: #ddd; margin-bottom: 1rem;">Tarifs en euros TTC. Les services sans prix sont sur devis.</p>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Prestation</th>
+                        <th>Bronze</th>
+                        <th>Argent</th>
+                        <th>Or</th>
+                    </tr>
+                </thead>
+                <tbody id="pricingTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- MODAL CONTACT -->
     <div id="contactModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Demande de devis</h2>
-            <form onsubmit="submitLead(event)">
-                <input type="text" id="leadName" placeholder="Nom complet" required>
-                <input type="email" id="leadEmail" placeholder="Email professionnel" required>
-                <input type="text" id="leadCompany" placeholder="Entreprise" required>
-                <select id="leadStatus" required>
+            <span class="close" onclick="closeModal('contactModal')">&times;</span>
+            <h2>Nous Contacter</h2>
+            
+            <p style="color: #ddd; margin-bottom: 1.5rem;">Choisissez le type de demande:</p>
+            
+            <form onsubmit="submitContact(event)">
+                <select id="contactType" required style="margin-bottom: 1rem;">
+                    <option value="">-- Sélectionnez --</option>
+                    <option value="support">🆘 Support Technique</option>
+                    <option value="contact">💬 Question Générale</option>
+                    <option value="devis">📋 Demande de Devis</option>
+                </select>
+                
+                <input type="text" id="contactName" placeholder="Nom complet" required>
+                <input type="email" id="contactEmail" placeholder="Email professionnel" required>
+                <input type="text" id="contactCompany" placeholder="Entreprise" required>
+                <textarea id="contactMessage" placeholder="Votre message..." required></textarea>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="contactPrivacy" required>
+                    <label for="contactPrivacy">J'accepte la <a href="/politique-confidentialite.html" target="_blank" style="color: var(--color-primary);">politique de confidentialité</a></label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+            
+            <div class="contact-info" style="margin-top: 1.5rem;">
+                <p><strong>📧 Nos emails:</strong></p>
+                <p>Support: <a href="mailto:support@zyqtron.com">support@zyqtron.com</a></p>
+                <p>Contact: <a href="mailto:contact@zyqtron.com">contact@zyqtron.com</a></p>
+                <p>Devis: <a href="mailto:zyqtron.vault@gmail.com">zyqtron.vault@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL DEVIS -->
+    <div id="devisModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('devisModal')">&times;</span>
+            <h2>Demande de Devis</h2>
+            
+            <form onsubmit="submitDevis(event)">
+                <input type="text" id="devisName" placeholder="Nom complet" required>
+                <input type="email" id="devisEmail" placeholder="Email professionnel" required>
+                <input type="text" id="devisCompany" placeholder="Entreprise" required>
+                
+                <select id="devisStatus" required>
                     <option value="">-- Statut --</option>
                     <option value="Particulier">Particulier</option>
+                    <option value="Startup">Startup</option>
                     <option value="PME">PME</option>
                     <option value="ETI">ETI</option>
                     <option value="Grand groupe">Grand groupe</option>
-                    <option value="URGENCE">URGENCE</option>
                 </select>
-                <button type="submit">Envoyer</button>
+                
+                <select id="devisUrgency" required>
+                    <option value="">-- Urgence --</option>
+                    <option value="Diagnostic court terme (4 semaines)">Diagnostic court terme (4 semaines)</option>
+                    <option value="Court terme (1-2 mois)">Court terme (1-2 mois)</option>
+                    <option value="Moyen terme (2-6 mois)">Moyen terme (2-6 mois)</option>
+                    <option value="Long terme (6-12 mois)">Long terme (6-12 mois)</option>
+                </select>
+                
+                <textarea id="devisMessage" placeholder="Détails de votre besoin..."></textarea>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="devisPrivacy" required>
+                    <label for="devisPrivacy">J'accepte la <a href="/politique-confidentialite.html" target="_blank" style="color: var(--color-primary);">politique de confidentialité</a></label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Demander le devis</button>
             </form>
         </div>
     </div>
     
+    <!-- MODAL ACHAT -->
+    <div id="achatModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('achatModal')">&times;</span>
+            <h2 id="achatTitle">Sélectionner votre pack</h2>
+            
+            <div id="achatPackages" style="margin: 1.5rem 0;">
+            </div>
+            
+            <p style="color: #ddd; font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+                Après sélection, vous serez redirigé pour finaliser votre commande.
+            </p>
+        </div>
+    </div>
+    
     <footer>
-    <p>&copy; 2025 ZYQTRON — Serreau David</p>
-    <p style="margin-top: 1rem; font-size: 0.9rem;">
-        <a href="/mentions-legales.html" style="color: var(--color-primary); text-decoration: none; margin: 0 1rem;">Mentions légales</a>
-        | 
-        <a href="/politique-confidentialite.html" style="color: var(--color-primary); text-decoration: none; margin: 0 1rem;">Politique de confidentialité</a>
-        | 
-        <a href="mailto:contact@zyqtron.com" style="color: var(--color-primary); text-decoration: none; margin: 0 1rem;">Contact</a>
-    </p>
-</footer>
-
+        <p>&copy; 2025 ZYQTRON — Serreau David</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">
+            <a href="/mentions-legales.html">Mentions légales</a>
+            | 
+            <a href="/politique-confidentialite.html">Politique de confidentialité</a>
+            | 
+            <a onclick="openModal('contactModal')">Contact</a>
+        </p>
+    </footer>
     
     <script>
         let allServices = [];
@@ -487,50 +702,88 @@
                 const data = await response.json();
                 allServices = data.services || [];
                 renderServices();
+                updatePricingTable();
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('Erreur chargement:', error);
                 document.getElementById('servicesContainer').innerHTML = '<p style="color: red;">Erreur chargement catalogue</p>';
             }
         }
         
         function renderServices() {
             const container = document.getElementById('servicesContainer');
-            const searchTerm = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+            const searchTerm = (document.getElementById('searchInput')?.value || '').toLowerCase();
             
             let filtered = allServices;
             
             if (currentFilter !== 'TOUS') {
-                filtered = filtered.filter(s => s.theme?.includes(currentFilter));
+                filtered = filtered.filter(s => s.theme === currentFilter);
             }
             
             if (searchTerm) {
                 filtered = filtered.filter(s => 
-                    s.name?.toLowerCase().includes(searchTerm) ||
-                    s.description?.toLowerCase().includes(searchTerm)
+                    (s.name || '').toLowerCase().includes(searchTerm) ||
+                    (s.description || '').toLowerCase().includes(searchTerm)
                 );
             }
             
-            container.innerHTML = filtered.map(service => `
-                <div class="service-card">
-                    <div class="service-id">ID #${service.id}</div>
-                    <div class="service-name">${service.name}</div>
-                    <div class="service-desc">${service.description?.substring(0, 100)}...</div>
-                    
+            container.innerHTML = filtered.map(service => {
+                const hasPrices = service.pricing_bronze || service.pricing_argent || service.pricing_or;
+                const pricingHtml = hasPrices ? `
                     <div class="pricing-tiers">
                         ${service.pricing_bronze ? `<div class="tier"><span class="tier-label">Bronze:</span> €${service.pricing_bronze}</div>` : ''}
                         ${service.pricing_argent ? `<div class="tier"><span class="tier-label">Argent:</span> €${service.pricing_argent}</div>` : ''}
                         ${service.pricing_or ? `<div class="tier"><span class="tier-label">Or:</span> €${service.pricing_or}</div>` : ''}
                     </div>
-                    
-                    <button class="contact-btn" onclick="openContactModal()">Demander un devis</button>
-                </div>
+                ` : `
+                    <div class="pricing-tiers">
+                        <div class="tier tier-devis">SUR DEVIS</div>
+                    </div>
+                `;
+                
+                const btnHtml = hasPrices ? `
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="openAchatModal(${service.id}, '${service.name.replace(/'/g, "\\'")}')">
+                            Sélectionner le pack
+                        </button>
+                    </div>
+                ` : `
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" onclick="openDevisModal('${service.name.replace(/'/g, "\\'")}')">
+                            Demander un devis
+                        </button>
+                    </div>
+                `;
+                
+                return `
+                    <div class="service-card">
+                        <div class="service-id">ID #${service.id}</div>
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-desc">${(service.description || '').substring(0, 100)}...</div>
+                        ${pricingHtml}
+                        ${btnHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updatePricingTable() {
+            const tbody = document.getElementById('pricingTableBody');
+            const withPrices = allServices.filter(s => s.pricing_bronze || s.pricing_argent || s.pricing_or);
+            
+            tbody.innerHTML = withPrices.map(service => `
+                <tr>
+                    <td><strong>${service.name}</strong></td>
+                    <td>${service.pricing_bronze ? '€' + service.pricing_bronze : '—'}</td>
+                    <td>${service.pricing_argent ? '€' + service.pricing_argent : '—'}</td>
+                    <td>${service.pricing_or ? '€' + service.pricing_or : '—'}</td>
+                </tr>
             `).join('');
         }
         
         function filterByTheme(theme) {
             currentFilter = theme;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event?.target?.classList.add('active');
+            event.target.classList.add('active');
             renderServices();
         }
         
@@ -538,34 +791,109 @@
             renderServices();
         }
         
-        function openContactModal() {
-            document.getElementById('contactModal').style.display = 'block';
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
         
-        function closeModal() {
-            document.getElementById('contactModal').style.display = 'none';
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
         }
         
-        function submitLead(e) {
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        function openDevisModal(serviceName) {
+            document.getElementById('devisModal').style.display = 'block';
+        }
+        
+        function openAchatModal(serviceId, serviceName) {
+            const service = allServices.find(s => s.id == serviceId);
+            if (!service) return;
+            
+            document.getElementById('achatTitle').innerText = serviceName;
+            
+            const packagesHtml = `
+                <div class="action-buttons">
+                    ${service.pricing_bronze ? `
+                        <button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Bronze', ${service.pricing_bronze}, '${service.purchase_email}')">
+                            📦 Pack Bronze - €${service.pricing_bronze}
+                        </button>
+                    ` : ''}
+                    ${service.pricing_argent ? `
+                        <button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Argent', ${service.pricing_argent}, '${service.purchase_email}')">
+                            📦 Pack Argent - €${service.pricing_argent}
+                        </button>
+                    ` : ''}
+                    ${service.pricing_or ? `
+                        <button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Or', ${service.pricing_or}, '${service.purchase_email}')">
+                            ⭐ Pack Or - €${service.pricing_or}
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('achatPackages').innerHTML = packagesHtml;
+            document.getElementById('achatModal').style.display = 'block';
+        }
+        
+        function redirectToPayment(serviceName, packName, price, email) {
+            const subject = `Achat: ${serviceName} - Pack ${packName}`;
+            const body = `Bonjour,\n\nJe souhaite acheter:\nService: ${serviceName}\nPack: ${packName}\nPrix: €${price}\n\nVeuillez me contacter pour finaliser.\n\nCordialement`;
+            
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+        
+        function submitDevis(e) {
             e.preventDefault();
-            const lead = {
-                name: document.getElementById('leadName').value,
-                email: document.getElementById('leadEmail').value,
-                company: document.getElementById('leadCompany').value,
-                status: document.getElementById('leadStatus').value,
-                timestamp: new Date().toISOString()
+            const name = document.getElementById('devisName').value;
+            const email = document.getElementById('devisEmail').value;
+            const company = document.getElementById('devisCompany').value;
+            const status = document.getElementById('devisStatus').value;
+            const urgency = document.getElementById('devisUrgency').value;
+            const message = document.getElementById('devisMessage').value;
+            
+            const subject = `Demande de devis - ${name}`;
+            const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\nStatut: ${status}\nUrgence: ${urgency}\n\nMessage:\n${message}`;
+            
+            window.location.href = `mailto:zyqtron.vault@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            closeModal('devisModal');
+        }
+        
+        function submitContact(e) {
+            e.preventDefault();
+            const type = document.getElementById('contactType').value;
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const company = document.getElementById('contactCompany').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            const emails = {
+                support: 'support@zyqtron.com',
+                contact: 'contact@zyqtron.com',
+                devis: 'zyqtron.vault@gmail.com'
             };
             
-            alert('✅ Demande envoyée! Nous vous contactons sous 24h.');
-            closeModal();
-            document.querySelector('form').reset();
+            const contactEmail = emails[type] || 'contact@zyqtron.com';
+            const subject = `[${type.toUpperCase()}] ${name} - ${company}`;
+            const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\n\nMessage:\n${message}`;
+            
+            window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            closeModal('contactModal');
         }
         
         window.onclick = function(event) {
-            const modal = document.getElementById('contactModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
         }
         
         window.addEventListener('load', loadCatalog);
