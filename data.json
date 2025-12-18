@@ -1,0 +1,314 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "theme": "THÈME 1",
+      "category": "Conseil & Audit",
+      "name": "Audit de maturité technologique",
+      "description": "Évaluation de la capacité d'une organisation à exploiter, protéger et monétiser ses actifs immatériels",
+      "pricing_bronze": 750,
+      "pricing_argent": 1500,
+      "pricing_or": 3000
+    },
+    {
+      "id": 2,
+      "theme": "THÈME 1",
+      "category": "Conseil & Audit",
+      "name": "Évaluation de la valeur d'un actif technologique",
+      "description": "Service d'estimation marchande et de potentiel de licensing pour entreprises",
+      "pricing_bronze": 1000,
+      "pricing_argent": 2000,
+      "pricing_or": 4000
+    },
+    {
+      "id": 3,
+      "theme": "THÈME 1",
+      "category": "Conseil & Audit",
+      "name": "Due diligence technologique",
+      "description": "Prestation pour investisseurs ou acquéreurs analysant la solidité d'un actif technologique",
+      "pricing_bronze": 1250,
+      "pricing_argent": 2500,
+      "pricing_or": 5000
+    },
+    {
+      "id": 4,
+      "theme": "THÈME 1",
+      "category": "Conseil & Audit",
+      "name": "Cartographie du portefeuille de savoir-faire",
+      "description": "Identification systématique de tous les actifs immatériels d'une organisation",
+      "pricing_bronze": 900,
+      "pricing_argent": 1800,
+      "pricing_or": 3600
+    },
+    {
+      "id": 49,
+      "theme": "THÈME 2",
+      "category": "Diagnostic & Audit",
+      "name": "Diagnostic de maturité cyber",
+      "description": "Évaluation 360 de la posture de sécurité avec scoring et benchmark sectoriel",
+      "pricing_bronze": 1000,
+      "pricing_argent": 2000,
+      "pricing_or": 4000
+    },
+    {
+      "id": 50,
+      "theme": "THÈME 2",
+      "category": "Diagnostic & Audit",
+      "name": "Cartographie des risques cyber",
+      "description": "Identification systématique et priorisation des risques selon impact métier",
+      "pricing_bronze": 1250,
+      "pricing_argent": 2500,
+      "pricing_or": 5000
+    },
+    {
+      "id": 51,
+      "theme": "THÈME 2",
+      "category": "Diagnostic & Audit",
+      "name": "Audit de conformité (ISO 27001, NIS2, DORA, RGPD)",
+      "description": "Vérification du niveau de conformité réglementaire avec gap analysis",
+      "pricing_bronze": 1500,
+      "pricing_argent": 3000,
+      "pricing_or": 6000
+    },
+    {
+      "id": 52,
+      "theme": "THÈME 2",
+      "category": "Diagnostic & Audit",
+      "name": "Test d'intrusion (Pentest)",
+      "description": "Évaluation de la sécurité par simulation d'attaque informatique",
+      "pricing_bronze": 2000,
+      "pricing_argent": 4000,
+      "pricing_or": 8000
+    },
+    {
+      "id": 110,
+      "theme": "THÈME 3",
+      "category": "IA - Recherche & Sourcing",
+      "name": "Recherche d'acheteurs potentiels (IA)",
+      "description": "Identification automatisée de prospects qualifiés pour vos actifs THKL",
+      "pricing_bronze": null,
+      "pricing_argent": null,
+      "pricing_or": null
+    },
+    {
+      "id": 114,
+      "theme": "THÈME 3",
+      "category": "IA - Production Documentaire",
+      "name": "Rédaction de teasers professionnels",
+      "description": "Création de pitch 1 page optimisé par IA à partir d'inputs structurés",
+      "pricing_bronze": 200,
+      "pricing_argent": 400,
+      "pricing_or": 800
+    },
+    {
+      "id": 115,
+      "theme": "THÈME 3",
+      "category": "IA - Production Documentaire",
+      "name": "Documentation technique (IA assistée)",
+      "description": "Génération de spécifications et documentations complètes pour produits/services",
+      "pricing_bronze": 350,
+      "pricing_argent": 700,
+      "pricing_or": 1400
+    },
+    {
+      "id": 116,
+      "theme": "THÈME 3",
+      "category": "IA - Production Documentaire",
+      "name": "Copywriting commercial optimisé",
+      "description": "Textes de vente et landing pages générés et optimisés par IA",
+      "pricing_bronze": 250,
+      "pricing_argent": 500,
+      "pricing_or": 1000
+    },
+    {
+      "id": 126,
+      "theme": "THÈME 4",
+      "category": "Positionnement",
+      "name": "Étude de positionnement marché",
+      "description": "Définition de niche et différenciation par analyse concurrentielle",
+      "pricing_bronze": null,
+      "pricing_argent": null,
+      "pricing_or": null
+    },
+    {
+      "id": 127,
+      "theme": "THÈME 4",
+      "category": "Positionnement",
+      "name": "Analyse compétitive approfondie",
+      "description": "Cartographie des concurrents, forces/faiblesses, opportunités de différenciation",
+      "pricing_bronze": 800,
+      "pricing_argent": 1600,
+      "pricing_or": 3200
+    },
+    {
+      "id": 130,
+      "theme": "THÈME 4",
+      "category": "Offre & Pricing",
+      "name": "Structuration d'offre commerciale",
+      "description": "Architecture de packs et services cohérente avec parcours client clair",
+      "pricing_bronze": null,
+      "pricing_argent": null,
+      "pricing_or": null
+    },
+    {
+      "id": 131,
+      "theme": "THÈME 4",
+      "category": "Offre & Pricing",
+      "name": "Stratégie de pricing et tiers (Bronze/Argent/Or)",
+      "description": "Définition de grille tarifaire optimisée pour maximiser revenus et conversions",
+      "pricing_bronze": 600,
+      "pricing_argent": 1200,
+      "pricing_or": 2400
+    },
+    {
+      "id": 132,
+      "theme": "THÈME 4",
+      "category": "GTM",
+      "name": "Go-to-Market Strategy",
+      "description": "Plan complet de lancement : chronologie, canaux, messaging, métriques clés",
+      "pricing_bronze": 1500,
+      "pricing_argent": 3000,
+      "pricing_or": 6000
+    },
+    {
+      "id": 366,
+      "theme": "THÈME 13",
+      "category": "Web3 & Blockchain",
+      "name": "Web3 Strategy Sprint",
+      "description": "Cadrage use-cases, choix chain, architecture wallet",
+      "pricing_bronze": null,
+      "pricing_argent": null,
+      "pricing_or": null
+    },
+    {
+      "id": 369,
+      "theme": "THÈME 13",
+      "category": "Web3 & Blockchain",
+      "name": "Développement Smart Contracts (Solidity/Rust)",
+      "description": "ERC-20, ERC-721, staking, vesting, access control",
+      "pricing_bronze": null,
+      "pricing_argent": null,
+      "pricing_or": null
+    },
+    {
+      "id": 370,
+      "theme": "THÈME 13",
+      "category": "Web3 & Blockchain",
+      "name": "Audit de sécurité Smart Contracts",
+      "description": "Vérification de vulnérabilités et optimisation des contrats intelligents",
+      "pricing_bronze": 2000,
+      "pricing_argent": 4000,
+      "pricing_or": 8000
+    },
+    {
+      "id": 381,
+      "theme": "THÈME 14",
+      "category": "Code & Web Factory",
+      "name": "Scripting Python – Automatisation sur mesure",
+      "description": "Scripts Python, ETL, scheduling, logs",
+      "pricing_bronze": 600,
+      "pricing_argent": 1200,
+      "pricing_or": 2400
+    },
+    {
+      "id": 382,
+      "theme": "THÈME 14",
+      "category": "Code & Web Factory",
+      "name": "API REST personnalisée (Node.js/FastAPI)",
+      "description": "Développement d'API robuste avec authentification et documentation",
+      "pricing_bronze": 1000,
+      "pricing_argent": 2000,
+      "pricing_or": 4000
+    },
+    {
+      "id": 383,
+      "theme": "THÈME 14",
+      "category": "Code & Web Factory",
+      "name": "Intégration Zapier/Make/Activepieces",
+      "description": "Automation workflows et connections entre outils sans code",
+      "pricing_bronze": 400,
+      "pricing_argent": 800,
+      "pricing_or": 1600
+    },
+    {
+      "id": 391,
+      "theme": "THÈME 15",
+      "category": "Publicité & Acquisition",
+      "name": "Meta Ads Performance",
+      "description": "Business Manager, Pixel, audiences, creatives, A/B tests",
+      "pricing_bronze": 600,
+      "pricing_argent": 1200,
+      "pricing_or": 2400
+    },
+    {
+      "id": 392,
+      "theme": "THÈME 15",
+      "category": "Publicité & Acquisition",
+      "name": "Google Ads Management (Search & Display)",
+      "description": "Gestion campagnes Google, optimisation bids, landing page conversion",
+      "pricing_bronze": 600,
+      "pricing_argent": 1200,
+      "pricing_or": 2400
+    },
+    {
+      "id": 393,
+      "theme": "THÈME 15",
+      "category": "Publicité & Acquisition",
+      "name": "LinkedIn B2B Lead Generation",
+      "description": "Stratégie LinkedIn, campaigns sponsorisées, lead magnet optimization",
+      "pricing_bronze": 800,
+      "pricing_argent": 1600,
+      "pricing_or": 3200
+    },
+    {
+      "id": 397,
+      "theme": "THÈME 11",
+      "category": "Social & Communautaire",
+      "name": "Personal Branding Exécutif",
+      "description": "Stratégie complète de positionnement d'un dirigeant comme leader de pensée",
+      "pricing_bronze": null,
+      "pricing_argent": null,
+      "pricing_or": null
+    },
+    {
+      "id": 398,
+      "theme": "THÈME 11",
+      "category": "Social & Communautaire",
+      "name": "Gestion LinkedIn Entreprise (Content + Community)",
+      "description": "Posts quotidiens, engagement, stratégie de thought leadership",
+      "pricing_bronze": 400,
+      "pricing_argent": 800,
+      "pricing_or": 1600
+    },
+    {
+      "id": 399,
+      "theme": "THÈME 11",
+      "category": "Social & Communautaire",
+      "name": "Newsletter stratégique (Substack/Beehiiv)",
+      "description": "Création et gestion newsletter B2B avec stratégie de rétention",
+      "pricing_bronze": 300,
+      "pricing_argent": 600,
+      "pricing_or": 1200
+    },
+    {
+      "id": 400,
+      "theme": "THÈME 15",
+      "category": "Publicité & Acquisition",
+      "name": "Stratégie de croissance omnicanal",
+      "description": "Plan d'acquisition cross-channel: SEO, paid, organic, partnerships",
+      "pricing_bronze": 1200,
+      "pricing_argent": 2400,
+      "pricing_or": 4800
+    },
+    {
+      "id": 401,
+      "theme": "THÈME 4",
+      "category": "GTM",
+      "name": "Audit complet du modèle économique",
+      "description": "Analyse détaillée de la rentabilité, LTV/CAC, unit economics",
+      "pricing_bronze": 1000,
+      "pricing_argent": 2000,
+      "pricing_or": 4000
+    }
+  ]
+}
