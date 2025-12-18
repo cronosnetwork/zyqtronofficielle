@@ -55,6 +55,12 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--color-primary);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
         
         nav {
@@ -237,6 +243,7 @@
             font-weight: bold;
             color: var(--color-primary);
             margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
         
         .service-desc {
@@ -264,7 +271,7 @@
         .tier-label {
             font-weight: bold;
             color: #fff;
-            display: block;
+            display: inline;
         }
         
         .tier-devis {
@@ -508,6 +515,13 @@
             text-decoration: underline;
         }
         
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            color: #999;
+            padding: 2rem;
+        }
+        
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; }
             nav { display: none; }
@@ -520,7 +534,7 @@
     <header>
         <div class="container">
             <div class="flex">
-                <div class="logo">🛡️ ZYQTRON</div>
+                <div class="logo" onclick="scrollToTop()">🛡️ ZYQTRON</div>
                 <nav>
                     <a onclick="scrollToSection('univers')">Univers</a>
                     <a onclick="scrollToSection('catalogue')">Catalogue</a>
@@ -562,19 +576,19 @@
         <section id="univers" style="margin: 3rem 0;">
             <h2 class="section-title">Choisissez votre univers</h2>
             <div class="universes">
-                <div class="card" onclick="filterByThemeCard('THÈME 1')">
+                <div class="card" onclick="filterAndScroll('THÈME 1')">
                     <h3>🔒 Cybersécurité</h3>
                     <p>Diagnostic audit, SOC/MDR, conformité, architecture sécurité</p>
                 </div>
-                <div class="card" onclick="filterByThemeCard('THÈME 2')">
+                <div class="card" onclick="filterAndScroll('THÈME 1')">
                     <h3>💼 Actifs THKL</h3>
                     <p>Valorisation, licensing, transfer de savoir-faire industrialisé</p>
                 </div>
-                <div class="card" onclick="filterByThemeCard('THÈME 3')">
+                <div class="card" onclick="filterAndScroll('THÈME 3')">
                     <h3>🤖 IA & Technologie</h3>
                     <p>Recherche, documentation, go-to-market assistés par IA</p>
                 </div>
-                <div class="card" onclick="filterByThemeCard('THÈME 4')">
+                <div class="card" onclick="filterAndScroll('THÈME 4')">
                     <h3>📊 Stratégie & GTM</h3>
                     <p>Positionnement, pricing, commercialisation, marketing</p>
                 </div>
@@ -589,15 +603,15 @@
             </div>
             
             <div class="filters">
-                <button class="filter-btn active" onclick="filterByTheme('TOUS')">TOUS</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 1')">THÈME 1</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 2')">THÈME 2</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 3')">THÈME 3</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 4')">THÈME 4</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 11')">THÈME 11</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 13')">THÈME 13</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 14')">THÈME 14</button>
-                <button class="filter-btn" onclick="filterByTheme('THÈME 15')">THÈME 15</button>
+                <button class="filter-btn active" onclick="filterByTheme(event, 'TOUS')">TOUS</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 1')">THÈME 1</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 2')">THÈME 2</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 3')">THÈME 3</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 4')">THÈME 4</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 11')">THÈME 11</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 13')">THÈME 13</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 14')">THÈME 14</button>
+                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 15')">THÈME 15</button>
             </div>
             
             <div id="servicesContainer" class="services-grid"></div>
@@ -620,8 +634,7 @@
                             <th>Or</th>
                         </tr>
                     </thead>
-                    <tbody id="pricingTableBody">
-                    </tbody>
+                    <tbody id="pricingTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -711,8 +724,7 @@
             <span class="close" onclick="closeModal('achatModal')">&times;</span>
             <h2 id="achatTitle">Sélectionner votre pack</h2>
             
-            <div id="achatPackages" style="margin: 1.5rem 0;">
-            </div>
+            <div id="achatPackages" style="margin: 1.5rem 0;"></div>
             
             <p style="color: #ddd; font-size: 0.85rem; margin-top: 1rem; text-align: center;">
                 Après sélection, vous serez redirigé pour finaliser votre commande.
@@ -732,177 +744,83 @@
     </footer>
     
     <script>
-        let allServices = [];
-        let currentFilter = 'TOUS';
+        const allServices = [
+            {"id":1,"theme":"THÈME 1","category":"Conseil & Audit","name":"Audit de maturité technologique","description":"Évaluation de la capacité d'une organisation à exploiter, protéger et monétiser ses actifs immatériels","pricing_bronze":750,"pricing_argent":1500,"pricing_or":3000},
+            {"id":2,"theme":"THÈME 1","category":"Conseil & Audit","name":"Évaluation de la valeur d'un actif technologique","description":"Service d'estimation marchande et de potentiel de licensing pour entreprises","pricing_bronze":1000,"pricing_argent":2000,"pricing_or":4000},
+            {"id":3,"theme":"THÈME 1","category":"Conseil & Audit","name":"Due diligence technologique","description":"Prestation pour investisseurs ou acquéreurs analysant la solidité d'un actif technologique","pricing_bronze":1250,"pricing_argent":2500,"pricing_or":5000},
+            {"id":49,"theme":"THÈME 2","category":"Diagnostic & Audit","name":"Diagnostic de maturité cyber","description":"Évaluation 360 de la posture de sécurité avec scoring et benchmark sectoriel","pricing_bronze":1000,"pricing_argent":2000,"pricing_or":4000},
+            {"id":50,"theme":"THÈME 2","category":"Diagnostic & Audit","name":"Cartographie des risques cyber","description":"Identification systématique et priorisation des risques selon impact métier","pricing_bronze":1250,"pricing_argent":2500,"pricing_or":5000},
+            {"id":51,"theme":"THÈME 2","category":"Diagnostic & Audit","name":"Audit de conformité (ISO 27001, NIS2, DORA, RGPD)","description":"Vérification du niveau de conformité réglementaire avec gap analysis","pricing_bronze":1500,"pricing_argent":3000,"pricing_or":6000},
+            {"id":110,"theme":"THÈME 3","category":"IA - Recherche & Sourcing","name":"Recherche d'acheteurs potentiels (IA)","description":"Identification automatisée de prospects qualifiés pour vos actifs THKL","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
+            {"id":114,"theme":"THÈME 3","category":"IA - Production Documentaire","name":"Rédaction de teasers professionnels","description":"Création de pitch 1 page optimisé par IA à partir d'inputs structurés","pricing_bronze":200,"pricing_argent":400,"pricing_or":800},
+            {"id":126,"theme":"THÈME 4","category":"Positionnement","name":"Étude de positionnement marché","description":"Définition de niche et différenciation par analyse concurrentielle","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
+            {"id":130,"theme":"THÈME 4","category":"Offre & Pricing","name":"Structuration d'offre commerciale","description":"Architecture de packs et services cohérente avec parcours client clair","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
+            {"id":397,"theme":"THÈME 11","category":"Social & Communautaire","name":"Personal Branding Exécutif","description":"Stratégie complète de positionnement d'un dirigeant comme leader de pensée","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
+            {"id":366,"theme":"THÈME 13","category":"Web3 & Blockchain","name":"Web3 Strategy Sprint","description":"Cadrage use-cases, choix chain, architecture wallet","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
+            {"id":369,"theme":"THÈME 13","category":"Web3 & Blockchain","name":"Développement Smart Contracts (Solidity/Rust)","description":"ERC-20, ERC-721, staking, vesting, access control","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
+            {"id":381,"theme":"THÈME 14","category":"Code & Web Factory","name":"Scripting Python – Automatisation sur mesure","description":"Scripts Python, ETL, scheduling, logs","pricing_bronze":600,"pricing_argent":1200,"pricing_or":2400},
+            {"id":391,"theme":"THÈME 15","category":"Publicité & Acquisition","name":"Meta Ads Performance","description":"Business Manager, Pixel, audiences, creatives, A/B tests","pricing_bronze":600,"pricing_argent":1200,"pricing_or":2400}
+        ];
         
-        async function loadCatalog() {
-            try {
-                const response = await fetch('data.json');
-                const data = await response.json();
-                allServices = data.services || [];
-                renderServices();
-                updatePricingTable();
-            } catch (error) {
-                console.error('Erreur chargement:', error);
-                document.getElementById('servicesContainer').innerHTML = '<p style="color: #dc2626;">Erreur: impossible de charger le catalogue</p>';
-            }
-        }
+        let currentFilter = 'TOUS';
         
         function renderServices() {
             const container = document.getElementById('servicesContainer');
-            if (!container) return;
-            
             const searchTerm = (document.getElementById('searchInput')?.value || '').toLowerCase();
             
-            let filtered = allServices.filter(s => s && s.id);
-            
-            if (currentFilter !== 'TOUS') {
-                filtered = filtered.filter(s => s.theme === currentFilter);
-            }
-            
-            if (searchTerm) {
-                filtered = filtered.filter(s => 
-                    (s.name || '').toLowerCase().includes(searchTerm) ||
-                    (s.description || '').toLowerCase().includes(searchTerm)
-                );
-            }
+            let filtered = allServices;
+            if (currentFilter !== 'TOUS') filtered = filtered.filter(s => s.theme === currentFilter);
+            if (searchTerm) filtered = filtered.filter(s => (s.name || '').toLowerCase().includes(searchTerm) || (s.description || '').toLowerCase().includes(searchTerm));
             
             if (filtered.length === 0) {
-                container.innerHTML = '<p style="color: #999; grid-column: 1/-1; text-align: center;">Aucun service trouvé</p>';
+                container.innerHTML = '<div class="no-results">Aucun service trouvé</div>';
                 return;
             }
             
             container.innerHTML = filtered.map(service => {
                 const hasPrices = service.pricing_bronze || service.pricing_argent || service.pricing_or;
-                const pricingHtml = hasPrices ? `
-                    <div class="pricing-tiers">
-                        ${service.pricing_bronze ? `<div class="tier"><span class="tier-label">Bronze:</span> €${service.pricing_bronze}</div>` : ''}
-                        ${service.pricing_argent ? `<div class="tier"><span class="tier-label">Argent:</span> €${service.pricing_argent}</div>` : ''}
-                        ${service.pricing_or ? `<div class="tier"><span class="tier-label">Or:</span> €${service.pricing_or}</div>` : ''}
-                    </div>
-                ` : `
-                    <div class="pricing-tiers">
-                        <div class="tier tier-devis">SUR DEVIS</div>
-                    </div>
-                `;
-                
-                const btnHtml = hasPrices ? `
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="openAchatModal(${service.id}, '${(service.name || '').replace(/'/g, "\\'")}')">
-                            Sélectionner le pack
-                        </button>
-                    </div>
-                ` : `
-                    <div class="action-buttons">
-                        <button class="btn btn-secondary" onclick="openDevisModal('${(service.name || '').replace(/'/g, "\\'")}')">
-                            Demander un devis
-                        </button>
-                    </div>
-                `;
-                
-                return `
-                    <div class="service-card">
-                        <div class="service-id">ID #${service.id}</div>
-                        <div class="service-name">${service.name || 'Sans titre'}</div>
-                        <div class="service-desc">${((service.description || '').substring(0, 100))}</div>
-                        ${pricingHtml}
-                        ${btnHtml}
-                    </div>
-                `;
+                const pricingHtml = hasPrices ? `<div class="pricing-tiers">${service.pricing_bronze ? `<div class="tier"><span class="tier-label">Bronze:</span> €${service.pricing_bronze}</div>` : ''}${service.pricing_argent ? `<div class="tier"><span class="tier-label">Argent:</span> €${service.pricing_argent}</div>` : ''}${service.pricing_or ? `<div class="tier"><span class="tier-label">Or:</span> €${service.pricing_or}</div>` : ''}</div>` : `<div class="pricing-tiers"><div class="tier tier-devis">SUR DEVIS</div></div>`;
+                const btnHtml = hasPrices ? `<div class="action-buttons"><button class="btn btn-primary" onclick="openAchatModal(${service.id}, '${(service.name || '').replace(/'/g, "\\'")}')"Sélectionner le pack</button></div>` : `<div class="action-buttons"><button class="btn btn-secondary" onclick="openDevisModal('${(service.name || '').replace(/'/g, "\\'")}')"Demander un devis</button></div>`;
+                return `<div class="service-card"><div class="service-id">ID #${service.id}</div><div class="service-name">${service.name || 'Sans titre'}</div><div class="service-desc">${((service.description || '').substring(0, 100))}</div>${pricingHtml}${btnHtml}</div>`;
             }).join('');
         }
         
         function updatePricingTable() {
             const tbody = document.getElementById('pricingTableBody');
-            if (!tbody) return;
-            
             const withPrices = allServices.filter(s => s.pricing_bronze || s.pricing_argent || s.pricing_or);
-            
-            if (withPrices.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">Aucun tarif disponible</td></tr>';
-                return;
-            }
-            
-            tbody.innerHTML = withPrices.map(service => `
-                <tr>
-                    <td><strong>${service.name || 'N/A'}</strong></td>
-                    <td>${service.pricing_bronze ? '€' + service.pricing_bronze : '—'}</td>
-                    <td>${service.pricing_argent ? '€' + service.pricing_argent : '—'}</td>
-                    <td>${service.pricing_or ? '€' + service.pricing_or : '—'}</td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = withPrices.map(service => `<tr><td><strong>${service.name || 'N/A'}</strong></td><td>${service.pricing_bronze ? '€' + service.pricing_bronze : '—'}</td><td>${service.pricing_argent ? '€' + service.pricing_argent : '—'}</td><td>${service.pricing_or ? '€' + service.pricing_or : '—'}</td></tr>`).join('');
         }
         
-        function filterByTheme(theme) {
+        function filterByTheme(e, theme) {
             currentFilter = theme;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            e.target.classList.add('active');
             document.getElementById('searchInput').value = '';
             renderServices();
-            document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' });
         }
         
-        function filterByThemeCard(theme) {
+        function filterAndScroll(theme) {
             currentFilter = theme;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.textContent === theme);
             if (btn) btn.classList.add('active');
             document.getElementById('searchInput').value = '';
             renderServices();
-            document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' }), 100);
         }
         
-        function filterServices() {
-            renderServices();
-        }
-        
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.style.display = 'block';
-        }
-        
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.style.display = 'none';
-        }
-        
-        function openDevisModal(serviceName) {
-            document.getElementById('devisModal').style.display = 'block';
-        }
+        function filterServices() { renderServices(); }
+        function scrollToTop() { document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' }); }
+        function scrollToSection(sectionId) { const element = document.getElementById(sectionId); if (element) element.scrollIntoView({ behavior: 'smooth' }); }
+        function openModal(modalId) { const modal = document.getElementById(modalId); if (modal) modal.style.display = 'block'; }
+        function closeModal(modalId) { const modal = document.getElementById(modalId); if (modal) modal.style.display = 'none'; }
+        function openDevisModal(serviceName) { document.getElementById('devisModal').style.display = 'block'; }
         
         function openAchatModal(serviceId, serviceName) {
             const service = allServices.find(s => s.id == serviceId);
             if (!service) return;
-            
             document.getElementById('achatTitle').innerText = serviceName;
-            
-            const packagesHtml = `
-                <div class="action-buttons">
-                    ${service.pricing_bronze ? `
-                        <button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Bronze', ${service.pricing_bronze}, '${service.purchase_email || 'zyqtron.vault@gmail.com'}')">
-                            📦 Pack Bronze - €${service.pricing_bronze}
-                        </button>
-                    ` : ''}
-                    ${service.pricing_argent ? `
-                        <button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Argent', ${service.pricing_argent}, '${service.purchase_email || 'zyqtron.vault@gmail.com'}')">
-                            📦 Pack Argent - €${service.pricing_argent}
-                        </button>
-                    ` : ''}
-                    ${service.pricing_or ? `
-                        <button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Or', ${service.pricing_or}, '${service.purchase_email || 'zyqtron.vault@gmail.com'}')">
-                            ⭐ Pack Or - €${service.pricing_or}
-                        </button>
-                    ` : ''}
-                </div>
-            `;
-            
+            const packagesHtml = `<div class="action-buttons">${service.pricing_bronze ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Bronze', ${service.pricing_bronze}, 'zyqtron.vault@gmail.com')">📦 Pack Bronze - €${service.pricing_bronze}</button>` : ''}${service.pricing_argent ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Argent', ${service.pricing_argent}, 'zyqtron.vault@gmail.com')">📦 Pack Argent - €${service.pricing_argent}</button>` : ''}${service.pricing_or ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Or', ${service.pricing_or}, 'zyqtron.vault@gmail.com')">⭐ Pack Or - €${service.pricing_or}</button>` : ''}</div>`;
             document.getElementById('achatPackages').innerHTML = packagesHtml;
             document.getElementById('achatModal').style.display = 'block';
         }
@@ -910,7 +828,6 @@
         function redirectToPayment(serviceName, packName, price, email) {
             const subject = `Achat: ${serviceName} - Pack ${packName}`;
             const body = `Bonjour,\n\nJe souhaite acheter:\nService: ${serviceName}\nPack: ${packName}\nPrix: €${price}\n\nVeuillez me contacter pour finaliser.\n\nCordialement`;
-            
             window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
         
@@ -922,12 +839,9 @@
             const status = document.getElementById('devisStatus').value;
             const urgency = document.getElementById('devisUrgency').value;
             const message = document.getElementById('devisMessage').value;
-            
             const subject = `Demande de devis - ${name}`;
             const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\nStatut: ${status}\nUrgence: ${urgency}\n\nMessage:\n${message}`;
-            
             window.location.href = `mailto:zyqtron.vault@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
             closeModal('devisModal');
         }
         
@@ -938,32 +852,21 @@
             const email = document.getElementById('contactEmail').value;
             const company = document.getElementById('contactCompany').value;
             const message = document.getElementById('contactMessage').value;
-            
-            const emails = {
-                support: 'support@zyqtron.com',
-                contact: 'contact@zyqtron.com',
-                devis: 'zyqtron.vault@gmail.com'
-            };
-            
+            const emails = { support: 'support@zyqtron.com', contact: 'contact@zyqtron.com', devis: 'zyqtron.vault@gmail.com' };
             const contactEmail = emails[type] || 'contact@zyqtron.com';
             const subject = `[${type.toUpperCase()}] ${name} - ${company}`;
             const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\n\nMessage:\n${message}`;
-            
             window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
             closeModal('contactModal');
         }
         
         window.onclick = function(event) {
             const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                }
-            });
+            modals.forEach(modal => { if (event.target == modal) modal.style.display = 'none'; });
         }
         
-        window.addEventListener('load', loadCatalog);
+        renderServices();
+        updatePricingTable();
     </script>
 </body>
 </html>
