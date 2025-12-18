@@ -1,398 +1,493 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZYQTRON — Analyse Stratégique, Cybersécurité, Actifs THKL</title>
-    <meta name="description" content="Diagnostic structuré en 30min: Cybersécurité, Juridique, Patrimonial, Technologie & IA. 401 prestations B2B. Tarification transparente.">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --color-primary: #D4A574;
-            --color-dark: #1a1a1a;
-            --color-light: #f5f5f5;
-            --color-accent: #ffd700;
-            --color-danger: #dc2626;
-            font-size: 16px;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: var(--color-dark);
-            color: #fff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        header {
-            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
-            padding: 2rem 1rem;
-            border-bottom: 1px solid var(--color-primary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-        header .flex { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--color-primary); }
-        nav { display: flex; gap: 2rem; }
-        nav a { color: #fff; text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: background 0.3s; cursor: pointer; }
-        nav a:hover { background: rgba(212, 165, 116, 0.2); }
-        main { padding: 3rem 1rem; }
-        .hero { text-align: center; margin-bottom: 3rem; }
-        h1 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--color-primary); }
-        .hero-desc { font-size: 1.1rem; color: #ddd; max-width: 600px; margin: 0 auto 2rem; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 3rem; text-align: center; }
-        .stat-box { background: rgba(212, 165, 116, 0.1); border: 1px solid var(--color-primary); border-radius: 8px; padding: 1.5rem; }
-        .stat-number { font-size: 2rem; color: var(--color-accent); font-weight: bold; }
-        .stat-label { color: #bbb; margin-top: 0.5rem; }
-        .universes { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0; }
-        .card { background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%); border: 1px solid var(--color-primary); border-radius: 12px; padding: 2rem; cursor: pointer; transition: all 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: var(--color-accent); box-shadow: 0 10px 30px rgba(212, 165, 116, 0.2); }
-        .card h3 { color: var(--color-primary); margin-bottom: 0.5rem; }
-        .card p { color: #bbb; font-size: 0.95rem; }
-        .section-title { font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem; text-align: center; }
-        .filters { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center; }
-        .filter-btn { background: rgba(212, 165, 116, 0.2); border: 1px solid var(--color-primary); color: var(--color-primary); padding: 0.7rem 1.5rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
-        .filter-btn:hover, .filter-btn.active { background: var(--color-primary); color: var(--color-dark); }
-        .search-box { margin-bottom: 2rem; text-align: center; }
-        .search-box input { width: 100%; max-width: 400px; padding: 0.8rem; border: 1px solid var(--color-primary); border-radius: 6px; background: rgba(212, 165, 116, 0.1); color: #fff; font-size: 1rem; }
-        .search-box input::placeholder { color: #777; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-        .service-card { background: rgba(212, 165, 116, 0.05); border: 1px solid rgba(212, 165, 116, 0.3); border-radius: 10px; padding: 1.5rem; transition: all 0.3s; }
-        .service-card:hover { border-color: var(--color-primary); background: rgba(212, 165, 116, 0.1); }
-        .service-id { font-size: 0.8rem; color: #888; margin-bottom: 0.3rem; }
-        .service-name { font-weight: bold; color: var(--color-primary); margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .service-desc { font-size: 0.9rem; color: #bbb; margin-bottom: 1rem; line-height: 1.4; }
-        .pricing-tiers { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .tier { background: rgba(212, 165, 116, 0.2); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; color: var(--color-primary); }
-        .tier-label { font-weight: bold; color: #fff; display: inline; }
-        .tier-devis { background: rgba(220, 38, 38, 0.3); color: #dc2626; }
-        .action-buttons { display: flex; gap: 0.7rem; flex-direction: column; }
-        .btn { border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.3s; font-size: 0.9rem; text-align: center; }
-        .btn-primary { background: var(--color-primary); color: var(--color-dark); width: 100%; }
-        .btn-primary:hover { background: var(--color-accent); }
-        .btn-secondary { background: rgba(212, 165, 116, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); width: 100%; }
-        .btn-secondary:hover { background: rgba(212, 165, 116, 0.3); }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-content { background: var(--color-dark); margin: 5% auto; padding: 2rem; border: 1px solid var(--color-primary); border-radius: 12px; width: 90%; max-width: 600px; animation: slideIn 0.3s; max-height: 80vh; overflow-y: auto; }
-        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .close { color: var(--color-primary); float: right; font-size: 2rem; font-weight: bold; cursor: pointer; }
-        .close:hover { color: var(--color-accent); }
-        .modal h2 { color: var(--color-primary); margin-bottom: 1rem; }
-        .modal input, .modal select, .modal textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--color-primary); border-radius: 6px; background: rgba(212, 165, 116, 0.1); color: #fff; font-size: 1rem; }
-        .modal select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23D4A574' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.5rem; appearance: none; }
-        .modal option { background: var(--color-dark); color: #fff; }
-        .modal textarea { resize: vertical; min-height: 100px; font-family: inherit; }
-        .modal input::placeholder, .modal textarea::placeholder { color: #999; }
-        .modal button { background: var(--color-primary); color: var(--color-dark); border: none; padding: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
-        .modal button:hover { background: var(--color-accent); }
-        .checkbox-group { display: flex; align-items: flex-start; gap: 0.5rem; margin: 1rem 0; }
-        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; margin-top: 0.2rem; }
-        .checkbox-group label { color: #ddd; font-size: 0.9rem; cursor: pointer; flex: 1; }
-        .checkbox-group a { color: var(--color-primary) !important; text-decoration: underline; }
-        .pricing-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.85rem; }
-        .pricing-table th, .pricing-table td { padding: 0.8rem 0.5rem; text-align: left; border-bottom: 1px solid rgba(212, 165, 116, 0.2); }
-        .pricing-table th { background: rgba(212, 165, 116, 0.15); color: var(--color-primary); font-weight: bold; position: sticky; top: 0; }
-        .pricing-table tr:hover { background: rgba(212, 165, 116, 0.05); }
-        footer { background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); border-top: 1px solid var(--color-primary); padding: 2rem 1rem; text-align: center; color: #888; margin-top: 3rem; }
-        footer a { color: var(--color-primary); text-decoration: none; margin: 0 0.5rem; }
-        footer a:hover { text-decoration: underline; }
-        .contact-info { background: rgba(212, 165, 116, 0.1); border-left: 4px solid var(--color-primary); padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; }
-        .contact-info p { margin: 0.5rem 0; }
-        .contact-info a { color: var(--color-primary) !important; text-decoration: none; }
-        .contact-info a:hover { text-decoration: underline; }
-        .no-results { grid-column: 1/-1; text-align: center; color: #999; padding: 2rem; }
-        .chatbot-btn { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: var(--color-dark); border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; font-size: 24px; z-index: 9998; font-weight: bold; transition: all 0.3s; box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4); }
-        .chatbot-btn:hover { transform: scale(1.1); background: var(--color-accent); }
-        .chatbot-container { position: fixed; bottom: 100px; right: 30px; width: 90vw; max-width: 500px; height: 80vh; max-height: 700px; background: var(--color-dark); border: 1px solid var(--color-primary); border-radius: 12px; display: none; flex-direction: column; z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .chatbot-header { background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); padding: 1.5rem; border-bottom: 1px solid var(--color-primary); display: flex; justify-content: space-between; align-items: center; }
-        .chatbot-header h2 { color: var(--color-primary); font-size: 1.1rem; margin: 0; }
-        .chatbot-close { background: none; border: none; color: var(--color-primary); font-size: 1.5rem; cursor: pointer; padding: 0; }
-        .chatbot-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-        .chat-msg { display: flex; }
-        .chat-msg.user { justify-content: flex-end; }
-        .chat-bubble { max-width: 80%; padding: 0.75rem 1rem; border-radius: 8px; word-wrap: break-word; font-size: 0.95rem; line-height: 1.4; }
-        .chat-msg.bot .chat-bubble { background: rgba(212, 165, 116, 0.1); border: 1px solid var(--color-primary); color: #ddd; }
-        .chat-msg.user .chat-bubble { background: var(--color-primary); color: var(--color-dark); font-weight: 500; }
-        .chatbot-input-area { padding: 1rem; border-top: 1px solid var(--color-primary); display: flex; gap: 0.5rem; }
-        .chatbot-input { flex: 1; padding: 0.8rem; border: 1px solid var(--color-primary); border-radius: 6px; background: rgba(212, 165, 116, 0.1); color: #fff; font-size: 0.95rem; }
-        .chatbot-input::placeholder { color: #777; }
-        .chatbot-input:focus { outline: none; border-color: var(--color-accent); }
-        .chatbot-send { background: var(--color-primary); color: var(--color-dark); border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .chatbot-send:hover { background: var(--color-accent); }
-        .chatbot-send:disabled { opacity: 0.5; cursor: not-allowed; }
-        .chatbot-messages::-webkit-scrollbar { width: 6px; }
-        .chatbot-messages::-webkit-scrollbar-thumb { background: var(--color-primary); }
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            nav { display: none; }
-            .universes { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZYQTRON — Analyse Stratégique, Cybersécurité, Actifs THKL</title>
+<meta name="description" content="Diagnostic structuré en 30min: Cybersécurité, Juridique, Patrimonial, Technologie & IA. 401 prestations B2B. Tarification transparente.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+--color-primary: #D4A574;
+--color-dark: #1a1a1a;
+--color-light: #f5f5f5;
+--color-accent: #ffd700;
+--color-danger: #dc2626;
+font-size: 16px;
+}
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+background: var(--color-dark);
+color: #fff;
+line-height: 1.6;
+overflow-x: hidden;
+}
+header {
+background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+padding: 2rem 1rem;
+border-bottom: 1px solid var(--color-primary);
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+header .flex { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--color-primary); }
+nav { display: flex; gap: 2rem; }
+nav a { color: #fff; text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: background 0.3s; cursor: pointer; }
+nav a:hover { background: rgba(212, 165, 116, 0.2); }
+main { padding: 3rem 1rem; }
+.hero { text-align: center; margin-bottom: 3rem; }
+h1 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--color-primary); }
+.hero-desc { font-size: 1.1rem; color: #ddd; max-width: 600px; margin: 0 auto 2rem; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 3rem; text-align: center; }
+.stat-box { background: rgba(212, 165, 116, 0.1); border: 1px solid var(--color-primary); border-radius: 8px; padding: 1.5rem; }
+.stat-number { font-size: 2rem; color: var(--color-accent); font-weight: bold; }
+.stat-label { color: #bbb; margin-top: 0.5rem; }
+.universes { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0; }
+.card { background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%); border: 1px solid var(--color-primary); border-radius: 12px; padding: 2rem; cursor: pointer; transition: all 0.3s; }
+.card:hover { transform: translateY(-5px); border-color: var(--color-accent); box-shadow: 0 10px 30px rgba(212, 165, 116, 0.2); }
+.card h3 { color: var(--color-primary); margin-bottom: 0.5rem; }
+.card p { color: #bbb; font-size: 0.95rem; }
+.section-title { font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem; text-align: center; }
+.filters { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center; }
+.filter-btn { background: rgba(212, 165, 116, 0.2); border: 1px solid var(--color-primary); color: var(--color-primary); padding: 0.7rem 1.5rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
+.filter-btn:hover, .filter-btn.active { background: var(--color-primary); color: var(--color-dark); }
+.search-box { margin-bottom: 2rem; text-align: center; }
+.search-box input { width: 100%; max-width: 400px; padding: 0.8rem; border: 1px solid var(--color-primary); border-radius: 6px; background: rgba(212, 165, 116, 0.1); color: #fff; font-size: 1rem; }
+.search-box input::placeholder { color: #777; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+.service-card { background: rgba(212, 165, 116, 0.05); border: 1px solid rgba(212, 165, 116, 0.3); border-radius: 10px; padding: 1.5rem; transition: all 0.3s; }
+.service-card:hover { border-color: var(--color-primary); background: rgba(212, 165, 116, 0.1); }
+.service-id { font-size: 0.8rem; color: #888; margin-bottom: 0.3rem; }
+.service-name { font-weight: bold; color: var(--color-primary); margin-bottom: 0.5rem; font-size: 0.95rem; }
+.service-desc { font-size: 0.9rem; color: #bbb; margin-bottom: 1rem; line-height: 1.4; }
+.pricing-tiers { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tier { background: rgba(212, 165, 116, 0.2); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; color: var(--color-primary); }
+.tier-label { font-weight: bold; color: #fff; display: inline; }
+.tier-devis { background: rgba(220, 38, 38, 0.3); color: #dc2626; }
+.action-buttons { display: flex; gap: 0.7rem; flex-direction: column; }
+.btn { border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.3s; font-size: 0.9rem; text-align: center; }
+.btn-primary { background: var(--color-primary); color: var(--color-dark); width: 100%; }
+.btn-primary:hover { background: var(--color-accent); }
+.btn-secondary { background: rgba(212, 165, 116, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); width: 100%; }
+.btn-secondary:hover { background: rgba(212, 165, 116, 0.3); }
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-content { background: var(--color-dark); margin: 5% auto; padding: 2rem; border: 1px solid var(--color-primary); border-radius: 12px; width: 90%; max-width: 600px; animation: slideIn 0.3s; max-height: 80vh; overflow-y: auto; }
+@keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.close { color: var(--color-primary); float: right; font-size: 2rem; font-weight: bold; cursor: pointer; }
+.close:hover { color: var(--color-accent); }
+.modal h2 { color: var(--color-primary); margin-bottom: 1rem; }
+.modal input, .modal select, .modal textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--color-primary); border-radius: 6px; background: rgba(212, 165, 116, 0.1); color: #fff; font-size: 1rem; }
+.modal select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23D4A574' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.5rem; appearance: none; }
+.modal option { background: var(--color-dark); color: #fff; }
+.modal textarea { resize: vertical; min-height: 100px; font-family: inherit; }
+.modal input::placeholder, .modal textarea::placeholder { color: #999; }
+.modal button { background: var(--color-primary); color: var(--color-dark); border: none; padding: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
+.modal button:hover { background: var(--color-accent); }
+.checkbox-group { display: flex; align-items: flex-start; gap: 0.5rem; margin: 1rem 0; }
+.checkbox-group input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; margin-top: 0.2rem; }
+.checkbox-group label { color: #ddd; font-size: 0.9rem; cursor: pointer; flex: 1; }
+.checkbox-group a { color: var(--color-primary) !important; text-decoration: underline; }
+.pricing-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.85rem; }
+.pricing-table th, .pricing-table td { padding: 0.8rem 0.5rem; text-align: left; border-bottom: 1px solid rgba(212, 165, 116, 0.2); }
+.pricing-table th { background: rgba(212, 165, 116, 0.15); color: var(--color-primary); font-weight: bold; position: sticky; top: 0; }
+.pricing-table tr:hover { background: rgba(212, 165, 116, 0.05); }
+footer { background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); border-top: 1px solid var(--color-primary); padding: 2rem 1rem; text-align: center; color: #888; margin-top: 3rem; }
+footer a { color: var(--color-primary); text-decoration: none; margin: 0 0.5rem; }
+footer a:hover { text-decoration: underline; }
+.contact-info { background: rgba(212, 165, 116, 0.1); border-left: 4px solid var(--color-primary); padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; }
+.contact-info p { margin: 0.5rem 0; }
+.contact-info a { color: var(--color-primary) !important; text-decoration: none; }
+.contact-info a:hover { text-decoration: underline; }
+.no-results { grid-column: 1/-1; text-align: center; color: #999; padding: 2rem; }
+.chatbot-btn { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: var(--color-dark); border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; font-size: 24px; z-index: 9998; font-weight: bold; transition: all 0.3s; box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4); }
+.chatbot-btn:hover { transform: scale(1.1); background: var(--color-accent); }
+.chatbot-container { position: fixed; bottom: 100px; right: 30px; width: 90vw; max-width: 500px; height: 80vh; max-height: 700px; background: var(--color-dark); border: 1px solid var(--color-primary); border-radius: 12px; display: none; flex-direction: column; z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+.chatbot-header { background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); padding: 1.5rem; border-bottom: 1px solid var(--color-primary); display: flex; justify-content: space-between; align-items: center; }
+.chatbot-header h2 { color: var(--color-primary); font-size: 1.1rem; margin: 0; }
+.chatbot-close { background: none; border: none; color: var(--color-primary); font-size: 1.5rem; cursor: pointer; padding: 0; }
+.chatbot-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+.chat-msg { display: flex; }
+.chat-msg.user { justify-content: flex-end; }
+.chat-bubble { max-width: 80%; padding: 0.75rem 1rem; border-radius: 8px; word-wrap: break-word; font-size: 0.95rem; line-height: 1.4; }
+.chat-msg.bot .chat-bubble { background: rgba(212, 165, 116, 0.1); border: 1px solid var(--color-primary); color: #ddd; }
+.chat-msg.user .chat-bubble { background: var(--color-primary); color: var(--color-dark); font-weight: 500; }
+.chatbot-input-area { padding: 1rem; border-top: 1px solid var(--color-primary); display: flex; gap: 0.5rem; }
+.chatbot-input { flex: 1; padding: 0.8rem; border: 1px solid var(--color-primary); border-radius: 6px; background: rgba(212, 165, 116, 0.1); color: #fff; font-size: 0.95rem; }
+.chatbot-input::placeholder { color: #777; }
+.chatbot-input:focus { outline: none; border-color: var(--color-accent); }
+.chatbot-send { background: var(--color-primary); color: var(--color-dark); border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.chatbot-send:hover { background: var(--color-accent); }
+.chatbot-send:disabled { opacity: 0.5; cursor: not-allowed; }
+.chatbot-messages::-webkit-scrollbar { width: 6px; }
+.chatbot-messages::-webkit-scrollbar-thumb { background: var(--color-primary); }
+@media (max-width: 768px) {
+h1 { font-size: 1.8rem; }
+nav { display: none; }
+.universes { grid-template-columns: 1fr; }
+.services-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="flex">
-                <div class="logo" onclick="scrollToTop()" style="cursor: pointer;">🛡️ ZYQTRON</div>
-                <nav>
-                    <a onclick="scrollToSection('univers')">Univers</a>
-                    <a onclick="scrollToSection('catalogue')">Catalogue</a>
-                    <a onclick="openModal('tarifModal')">Tarifs</a>
-                    <a onclick="openModal('contactModal')">Contact</a>
-                </nav>
-            </div>
-        </div>
-    </header>
-    
-    <main class="container">
-        <section class="hero">
-            <h1>Le Moteur de Certitude</h1>
-            <p class="hero-desc">Diagnostic B2B structuré en 30 minutes. Cybersécurité • Juridique • Patrimonial • Technologie & IA.<br>401 prestations. Tarification transparente.</p>
-        </section>
-        
-        <div class="stats">
-            <div class="stat-box"><div class="stat-number">401</div><div class="stat-label">Prestations</div></div>
-            <div class="stat-box"><div class="stat-number">16</div><div class="stat-label">Thèmes</div></div>
-            <div class="stat-box"><div class="stat-number">4</div><div class="stat-label">Univers</div></div>
-            <div class="stat-box"><div class="stat-number">100%</div><div class="stat-label">B2B</div></div>
-        </div>
-        
-        <section id="univers" style="margin: 3rem 0;">
-            <h2 class="section-title">Choisissez votre univers</h2>
-            <div class="universes">
-                <div class="card" onclick="filterAndScroll('THÈME 1')"><h3>🔒 Cybersécurité</h3><p>Diagnostic audit, SOC/MDR, conformité, architecture sécurité</p></div>
-                <div class="card" onclick="filterAndScroll('THÈME 1')"><h3>💼 Actifs THKL</h3><p>Valorisation, licensing, transfer de savoir-faire industrialisé</p></div>
-                <div class="card" onclick="filterAndScroll('THÈME 3')"><h3>🤖 IA & Technologie</h3><p>Recherche, documentation, go-to-market assistés par IA</p></div>
-                <div class="card" onclick="filterAndScroll('THÈME 4')"><h3>📊 Stratégie & GTM</h3><p>Positionnement, pricing, commercialisation, marketing</p></div>
-            </div>
-        </section>
-        
-        <section id="catalogue" style="margin: 3rem 0;">
-            <h2 class="section-title">Catalogue complet</h2>
-            <div class="search-box"><input type="text" id="searchInput" placeholder="Chercher une prestation..." onkeyup="filterServices()"></div>
-            <div class="filters">
-                <button class="filter-btn active" onclick="filterByTheme(event, 'TOUS')">TOUS</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 1')">THÈME 1</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 2')">THÈME 2</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 3')">THÈME 3</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 4')">THÈME 4</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 11')">THÈME 11</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 13')">THÈME 13</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 14')">THÈME 14</button>
-                <button class="filter-btn" onclick="filterByTheme(event, 'THÈME 15')">THÈME 15</button>
-            </div>
-            <div id="servicesContainer" class="services-grid"></div>
-        </section>
-    </main>
-    
-    <div id="tarifModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('tarifModal')">&times;</span>
-            <h2>Grille Tarifaire</h2>
-            <p style="color: #ddd; margin-bottom: 1rem; font-size: 0.9rem;">Tarifs en euros TTC. Les services sans prix sont sur devis.</p>
-            <div style="overflow-x: auto;">
-                <table class="pricing-table">
-                    <thead><tr><th>Prestation</th><th>Bronze</th><th>Argent</th><th>Or</th></tr></thead>
-                    <tbody id="pricingTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('contactModal')">&times;</span>
-            <h2>Nous Contacter</h2>
-            <p style="color: #ddd; margin-bottom: 1.5rem; font-size: 0.9rem;">Choisissez le type de demande:</p>
-            <form onsubmit="submitContact(event)">
-                <select id="contactType" required><option value="">-- Sélectionnez --</option><option value="support">🆘 Support Technique</option><option value="contact">💬 Question Générale</option><option value="devis">📋 Demande de Devis</option></select>
-                <input type="text" id="contactName" placeholder="Nom complet" required>
-                <input type="email" id="contactEmail" placeholder="Email professionnel" required>
-                <input type="text" id="contactCompany" placeholder="Entreprise" required>
-                <textarea id="contactMessage" placeholder="Votre message..." required></textarea>
-                <div class="checkbox-group"><input type="checkbox" id="contactPrivacy" required><label for="contactPrivacy">J'accepte la <a href="/politique-confidentialite.html" target="_blank">politique de confidentialité</a></label></div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </form>
-            <div class="contact-info">
-                <p><strong>📧 Nos emails:</strong></p>
-                <p>Support: <a href="mailto:support@zyqtron.com">support@zyqtron.com</a></p>
-                <p>Contact: <a href="mailto:contact@zyqtron.com">contact@zyqtron.com</a></p>
-                <p>Devis: <a href="mailto:zyqtron.vault@gmail.com">zyqtron.vault@gmail.com</a></p>
-            </div>
-        </div>
-    </div>
-    
-    <div id="devisModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('devisModal')">&times;</span>
-            <h2>Demande de Devis</h2>
-            <form onsubmit="submitDevis(event)">
-                <input type="text" id="devisName" placeholder="Nom complet" required>
-                <input type="email" id="devisEmail" placeholder="Email professionnel" required>
-                <input type="text" id="devisCompany" placeholder="Entreprise" required>
-                <select id="devisStatus" required><option value="">-- Statut --</option><option value="Particulier">Particulier</option><option value="Startup">Startup</option><option value="PME">PME</option><option value="ETI">ETI</option><option value="Grand groupe">Grand groupe</option></select>
-                <select id="devisUrgency" required><option value="">-- Urgence --</option><option value="Diagnostic court terme (4 semaines)">Diagnostic court terme (4 semaines)</option><option value="Court terme (1-2 mois)">Court terme (1-2 mois)</option><option value="Moyen terme (2-6 mois)">Moyen terme (2-6 mois)</option><option value="Long terme (6-12 mois)">Long terme (6-12 mois)</option></select>
-                <textarea id="devisMessage" placeholder="Détails de votre besoin..."></textarea>
-                <div class="checkbox-group"><input type="checkbox" id="devisPrivacy" required><label for="devisPrivacy">J'accepte la <a href="/politique-confidentialite.html" target="_blank">politique de confidentialité</a></label></div>
-                <button type="submit" class="btn btn-primary">Demander le devis</button>
-            </form>
-        </div>
-    </div>
-    
-    <div id="achatModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('achatModal')">&times;</span>
-            <h2 id="achatTitle">Sélectionner votre pack</h2>
-            <div id="achatPackages" style="margin: 1.5rem 0;"></div>
-            <p style="color: #ddd; font-size: 0.85rem; margin-top: 1rem; text-align: center;">Après sélection, vous serez redirigé pour finaliser votre commande.</p>
-        </div>
-    </div>
-    
-    <footer>
-        <p>&copy; 2025 ZYQTRON — Serreau David</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">
-            <a href="/mentions-legales.html">Mentions légales</a> | <a href="/politique-confidentialite.html">Politique de confidentialité</a> | <a onclick="openModal('contactModal')">Contact</a>
-        </p>
-    </footer>
-    
-    <button class="chatbot-btn" onclick="toggleChat()">💬</button>
-    <div class="chatbot-container" id="chatContainer">
-        <div class="chatbot-header">
-            <h2>🛡️ Chat Zyqtron</h2>
-            <button class="chatbot-close" onclick="toggleChat()">✕</button>
-        </div>
-        <div class="chatbot-messages" id="chatMessages"></div>
-        <div class="chatbot-input-area">
-            <input type="text" class="chatbot-input" id="chatInput" placeholder="Message..." onkeypress="if(event.key==='Enter') chatSend()">
-            <button class="chatbot-send" id="chatSendBtn" onclick="chatSend()" disabled>→</button>
-        </div>
-    </div>
-    
-    <script>
-        const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-        const GROQ_MODEL = 'mixtral-8x7b-32768';
-        const BACKEND_ENDPOINT = '/api/chat'; // Utilise ton backend
-        const chatState = { messages: [] };
-        
-        const allServices = [
-            {"id":1,"theme":"THÈME 1","category":"Conseil & Audit","name":"Audit de maturité technologique","description":"Évaluation de la capacité d'une organisation à exploiter, protéger et monétiser ses actifs immatériels","pricing_bronze":750,"pricing_argent":1500,"pricing_or":3000},
-            {"id":2,"theme":"THÈME 1","category":"Conseil & Audit","name":"Évaluation de la valeur d'un actif technologique","description":"Service d'estimation marchande et de potentiel de licensing pour entreprises","pricing_bronze":1000,"pricing_argent":2000,"pricing_or":4000},
-            {"id":3,"theme":"THÈME 1","category":"Conseil & Audit","name":"Due diligence technologique","description":"Prestation pour investisseurs ou acquéreurs analysant la solidité d'un actif technologique","pricing_bronze":1250,"pricing_argent":2500,"pricing_or":5000},
-            {"id":49,"theme":"THÈME 2","category":"Diagnostic & Audit","name":"Diagnostic de maturité cyber","description":"Évaluation 360 de la posture de sécurité avec scoring et benchmark sectoriel","pricing_bronze":1000,"pricing_argent":2000,"pricing_or":4000},
-            {"id":50,"theme":"THÈME 2","category":"Diagnostic & Audit","name":"Cartographie des risques cyber","description":"Identification systématique et priorisation des risques selon impact métier","pricing_bronze":1250,"pricing_argent":2500,"pricing_or":5000},
-            {"id":51,"theme":"THÈME 2","category":"Diagnostic & Audit","name":"Audit de conformité (ISO 27001, NIS2, DORA, RGPD)","description":"Vérification du niveau de conformité réglementaire avec gap analysis","pricing_bronze":1500,"pricing_argent":3000,"pricing_or":6000},
-            {"id":110,"theme":"THÈME 3","category":"IA - Recherche & Sourcing","name":"Recherche d'acheteurs potentiels (IA)","description":"Identification automatisée de prospects qualifiés pour vos actifs THKL","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
-            {"id":114,"theme":"THÈME 3","category":"IA - Production Documentaire","name":"Rédaction de teasers professionnels","description":"Création de pitch 1 page optimisé par IA à partir d'inputs structurés","pricing_bronze":200,"pricing_argent":400,"pricing_or":800},
-            {"id":126,"theme":"THÈME 4","category":"Positionnement","name":"Étude de positionnement marché","description":"Définition de niche et différenciation par analyse concurrentielle","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
-            {"id":130,"theme":"THÈME 4","category":"Offre & Pricing","name":"Structuration d'offre commerciale","description":"Architecture de packs et services cohérente avec parcours client clair","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
-            {"id":397,"theme":"THÈME 11","category":"Social & Communautaire","name":"Personal Branding Exécutif","description":"Stratégie complète de positionnement d'un dirigeant comme leader de pensée","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
-            {"id":366,"theme":"THÈME 13","category":"Web3 & Blockchain","name":"Web3 Strategy Sprint","description":"Cadrage use-cases, choix chain, architecture wallet","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
-            {"id":369,"theme":"THÈME 13","category":"Web3 & Blockchain","name":"Développement Smart Contracts (Solidity/Rust)","description":"ERC-20, ERC-721, staking, vesting, access control","pricing_bronze":null,"pricing_argent":null,"pricing_or":null},
-            {"id":381,"theme":"THÈME 14","category":"Code & Web Factory","name":"Scripting Python – Automatisation sur mesure","description":"Scripts Python, ETL, scheduling, logs","pricing_bronze":600,"pricing_argent":1200,"pricing_or":2400},
-            {"id":391,"theme":"THÈME 15","category":"Publicité & Acquisition","name":"Meta Ads Performance","description":"Business Manager, Pixel, audiences, creatives, A/B tests","pricing_bronze":600,"pricing_argent":1200,"pricing_or":2400}
-        ];
-        
-        let currentFilter = 'TOUS';
-        
-        function toggleChat() {
-            const c = document.getElementById('chatContainer');
-            c.style.display = c.style.display === 'none' ? 'flex' : 'none';
-            if (c.style.display === 'flex' && chatState.messages.length === 0) {
-                displayMsg('bot', 'Bonjour! 👋 Bienvenue chez Zyqtron.\n\nNous valorisons les actifs technologiques (Technology/Know-How Licensing).\n\nQuel est votre rôle?');
-            }
-        }
-        
-        function displayMsg(type, text) {
-            const msgs = document.getElementById('chatMessages');
-            const msg = document.createElement('div');
-            msg.className = `chat-msg ${type}`;
-            msg.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
-            msgs.appendChild(msg);
-            msgs.scrollTop = msgs.scrollHeight;
-            chatState.messages.push({role: type === 'user' ? 'user' : 'assistant', content: text});
-        }
-        
-        async function chatSend() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
-            input.value = '';
-            displayMsg('user', text);
-            document.getElementById('chatSendBtn').disabled = true;
-            
-            try {
-                const response = await fetch(BACKEND_ENDPOINT, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        message: text,
-                        history: chatState.messages.slice(-10)
-                    })
-                });
-                
-                const data = await response.json();
-                if (data.response) {
-                    displayMsg('bot', data.response);
-                } else {
-                    displayMsg('bot', '❌ Erreur: Impossible de contacter le serveur');
-                }
-            } catch (e) {
-                displayMsg('bot', '❌ Erreur: ' + e.message);
-            }
-            document.getElementById('chatSendBtn').disabled = false;
-            document.getElementById('chatInput').focus();
-        }
-        
-        document.getElementById('chatInput').addEventListener('input', (e) => {
-            document.getElementById('chatSendBtn').disabled = !e.target.value.trim();
-        });
-        
-        function renderServices() {
-            const container = document.getElementById('servicesContainer');
-            const searchTerm = (document.getElementById('searchInput')?.value || '').toLowerCase();
-            let filtered = allServices;
-            if (currentFilter !== 'TOUS') { filtered = filtered.filter(s => s.theme === currentFilter); }
-            if (searchTerm) { filtered = filtered.filter(s => (s.name || '').toLowerCase().includes(searchTerm) || (s.description || '').toLowerCase().includes(searchTerm)); }
-            if (filtered.length === 0) { container.innerHTML = '<div class="no-results">Aucun service trouvé</div>'; return; }
-            container.innerHTML = filtered.map(service => {
-                const hasPrices = service.pricing_bronze || service.pricing_argent || service.pricing_or;
-                const pricingHtml = hasPrices ? `<div class="pricing-tiers">${service.pricing_bronze ? `<div class="tier"><span class="tier-label">Bronze:</span> €${service.pricing_bronze}</div>` : ''}${service.pricing_argent ? `<div class="tier"><span class="tier-label">Argent:</span> €${service.pricing_argent}</div>` : ''}${service.pricing_or ? `<div class="tier"><span class="tier-label">Or:</span> €${service.pricing_or}</div>` : ''}</div>` : `<div class="pricing-tiers"><div class="tier tier-devis">SUR DEVIS</div></div>`;
-                const btnHtml = hasPrices ? `<div class="action-buttons"><button class="btn btn-primary" onclick="openAchatModal(${service.id}, '${(service.name || '').replace(/'/g, "\\'")}')">Sélectionner le pack</button></div>` : `<div class="action-buttons"><button class="btn btn-secondary" onclick="openDevisModal()">Demander un devis</button></div>`;
-                return `<div class="service-card"><div class="service-id">ID #${service.id}</div><div class="service-name">${service.name || 'Sans titre'}</div><div class="service-desc">${((service.description || '').substring(0, 100))}</div>${pricingHtml}${btnHtml}</div>`;
-            }).join('');
-        }
-        
-        function updatePricingTable() {
-            const tbody = document.getElementById('pricingTableBody');
-            const withPrices = allServices.filter(s => s.pricing_bronze || s.pricing_argent || s.pricing_or);
-            if (withPrices.length === 0) { tbody.innerHTML = '<tr><td colspan="4">Aucun tarif</td></tr>'; return; }
-            tbody.innerHTML = withPrices.map(s => `<tr><td><strong>${s.name}</strong></td><td>${s.pricing_bronze ? '€' + s.pricing_bronze : '—'}</td><td>${s.pricing_argent ? '€' + s.pricing_argent : '—'}</td><td>${s.pricing_or ? '€' + s.pricing_or : '—'}</td></tr>`).join('');
-        }
-        
-        function filterByTheme(e, theme) { currentFilter = theme; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); e.target.classList.add('active'); document.getElementById('searchInput').value = ''; renderServices(); }
-        function filterAndScroll(theme) { currentFilter = theme; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.textContent === theme); if (btn) btn.classList.add('active'); document.getElementById('searchInput').value = ''; renderServices(); setTimeout(() => document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' }), 100); }
-        function filterServices() { renderServices(); }
-        function scrollToTop() { document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' }); }
-        function scrollToSection(sectionId) { const element = document.getElementById(sectionId); if (element) { element.scrollIntoView({ behavior: 'smooth' }); } }
-        function openModal(modalId) { document.getElementById(modalId).style.display = 'block'; }
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-        function openDevisModal() { document.getElementById('devisModal').style.display = 'block'; }
-        function openAchatModal(serviceId, serviceName) {
-            const service = allServices.find(s => s.id == serviceId);
-            if (!service) return;
-            document.getElementById('achatTitle').innerText = serviceName;
-            const packagesHtml = `<div class="action-buttons">${service.pricing_bronze ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Bronze', ${service.pricing_bronze})">📦 Pack Bronze - €${service.pricing_bronze}</button>` : ''}${service.pricing_argent ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Argent', ${service.pricing_argent})">📦 Pack Argent - €${service.pricing_argent}</button>` : ''}${service.pricing_or ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Or', ${service.pricing_or})">⭐ Pack Or - €${service.pricing_or}</button>` : ''}</div>`;
-            document.getElementById('achatPackages').innerHTML = packagesHtml;
-            document.getElementById('achatModal').style.display = 'block';
-        }
-        function redirectToPayment(serviceName, packName, price) { const subject = `Achat: ${serviceName} - Pack ${packName}`; const body = `Bonjour,\n\nJe souhaite acheter:\nService: ${serviceName}\nPack: ${packName}\nPrix: €${price}\n\nVeuillez me contacter pour finaliser.\n\nCordialement`; window.location.href = `mailto:zyqtron.vault@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; }
-        function submitDevis(e) { e.preventDefault(); const name = document.getElementById('devisName').value; const email = document.getElementById('devisEmail').value; const company = document.getElementById('devisCompany').value; const status = document.getElementById('devisStatus').value; const urgency = document.getElementById('devisUrgency').value; const message = document.getElementById('devisMessage').value; const subject = `Demande de devis - ${name}`; const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\nStatut: ${status}\nUrgence: ${urgency}\n\nMessage:\n${message}`; window.location.href = `mailto:zyqtron.vault@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; document.getElementById('devisModal').style.display = 'none'; }
-        function submitContact(e) { e.preventDefault(); const type = document.getElementById('contactType').value; const name = document.getElementById('contactName').value; const email = document.getElementById('contactEmail').value; const company = document.getElementById('contactCompany').value; const message = document.getElementById('contactMessage').value; const emails = { support: 'support@zyqtron.com', contact: 'contact@zyqtron.com', devis: 'zyqtron.vault@gmail.com' }; const contactEmail = emails[type] || 'contact@zyqtron.com'; const subject = `[${type.toUpperCase()}] ${name} - ${company}`; const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\n\nMessage:\n${message}`; window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; document.getElementById('contactModal').style.display = 'none'; }
-        window.onclick = function(event) { document.querySelectorAll('.modal').forEach(modal => { if (event.target == modal) { modal.style.display = 'none'; } }); }
-        renderServices();
-        updatePricingTable();
-    </script>
+<header>
+<div class="container">
+<div class="flex">
+<div class="logo" onclick="scrollToTop()" style="cursor: pointer;">🛡️ ZYQTRON</div>
+<nav>
+<a onclick="scrollToSection('univers')">Univers</a>
+<a onclick="scrollToSection('catalogue')">Catalogue</a>
+<a onclick="openModal('tarifModal')">Tarifs</a>
+<a onclick="openModal('contactModal')">Contact</a>
+</nav>
+</div>
+</div>
+</header>
+
+<main class="container">
+<section class="hero">
+<h1>Le Moteur de Certitude</h1>
+<p class="hero-desc">Diagnostic B2B structuré en 30 minutes. Cybersécurité • Juridique • Patrimonial • Technologie & IA.<br>401 prestations. Tarification transparente.</p>
+</section>
+
+<div class="stats">
+<div class="stat-box"><div class="stat-number">401</div><div class="stat-label">Prestations</div></div>
+<div class="stat-box"><div class="stat-number">16</div><div class="stat-label">Thèmes</div></div>
+<div class="stat-box"><div class="stat-number">4</div><div class="stat-label">Univers</div></div>
+<div class="stat-box"><div class="stat-number">100%</div><div class="stat-label">B2B</div></div>
+</div>
+
+<section id="univers" style="margin: 3rem 0;">
+<h2 class="section-title">Choisissez votre univers</h2>
+<div class="universes">
+<div class="card" onclick="filterAndScroll('THÈME 1')"><h3>🔒 Cybersécurité</h3><p>Diagnostic audit, SOC/MDR, conformité, architecture sécurité</p></div>
+<div class="card" onclick="filterAndScroll('THÈME 1')"><h3>💼 Actifs THKL</h3><p>Valorisation, licensing, transfer de savoir-faire industrialisé</p></div>
+<div class="card" onclick="filterAndScroll('THÈME 3')"><h3>🤖 IA & Technologie</h3><p>Recherche, documentation, go-to-market assistés par IA</p></div>
+<div class="card" onclick="filterAndScroll('THÈME 4')"><h3>📊 Stratégie & GTM</h3><p>Positionnement, pricing, commercialisation, marketing</p></div>
+</div>
+</section>
+
+<section id="catalogue" style="margin: 3rem 0;">
+<h2 class="section-title">Catalogue complet</h2>
+<div class="search-box"><input type="text" id="searchInput" placeholder="Chercher une prestation..." onkeyup="filterServices()"></div>
+<div class="filters">
+<button class="filter-btn active" onclick="filterByTheme(event, 'TOUS')">TOUS</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 1')">THÈME 1</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 2')">THÈME 2</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 3')">THÈME 3</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 4')">THÈME 4</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 11')">THÈME 11</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 13')">THÈME 13</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 14')">THÈME 14</button>
+<button class="filter-btn" onclick="filterByTheme(event, 'THÈME 15')">THÈME 15</button>
+</div>
+<div id="servicesContainer" class="services-grid"></div>
+</section>
+</main>
+
+<div id="tarifModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('tarifModal')">&times;</span>
+<h2>Grille Tarifaire</h2>
+<p style="color: #ddd; margin-bottom: 1rem; font-size: 0.9rem;">Tarifs en euros TTC. Les services sans prix sont sur devis.</p>
+<div style="overflow-x: auto;">
+<table class="pricing-table">
+<thead><tr><th>Prestation</th><th>Bronze</th><th>Argent</th><th>Or</th></tr></thead>
+<tbody id="pricingTableBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="contactModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('contactModal')">&times;</span>
+<h2>Nous Contacter</h2>
+<p style="color: #ddd; margin-bottom: 1.5rem; font-size: 0.9rem;">Choisissez le type de demande:</p>
+<form onsubmit="submitContact(event)">
+<select id="contactType" required><option value="">-- Sélectionnez --</option><option value="support">🆘 Support Technique</option><option value="contact">💬 Question Générale</option><option value="devis">📋 Demande de Devis</option></select>
+<input type="text" id="contactName" placeholder="Nom complet" required>
+<input type="email" id="contactEmail" placeholder="Email professionnel" required>
+<input type="text" id="contactCompany" placeholder="Entreprise" required>
+<textarea id="contactMessage" placeholder="Votre message..." required></textarea>
+<div class="checkbox-group"><input type="checkbox" id="contactPrivacy" required><label for="contactPrivacy">J'accepte la <a href="/politique-confidentialite.html" target="_blank">politique de confidentialité</a></label></div>
+<button type="submit" class="btn btn-primary">Envoyer</button>
+</form>
+<div class="contact-info">
+<p><strong>📧 Nos emails:</strong></p>
+<p>Support: <a href="mailto:support@zyqtron.com">support@zyqtron.com</a></p>
+<p>Contact: <a href="mailto:contact@zyqtron.com">contact@zyqtron.com</a></p>
+<p>Devis: <a href="mailto:zyqtron.vault@gmail.com">zyqtron.vault@gmail.com</a></p>
+</div>
+</div>
+</div>
+
+<div id="devisModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('devisModal')">&times;</span>
+<h2>Demande de Devis</h2>
+<form onsubmit="submitDevis(event)">
+<input type="text" id="devisName" placeholder="Nom complet" required>
+<input type="email" id="devisEmail" placeholder="Email professionnel" required>
+<input type="text" id="devisCompany" placeholder="Entreprise" required>
+<select id="devisStatus" required><option value="">-- Statut --</option><option value="Particulier">Particulier</option><option value="Startup">Startup</option><option value="PME">PME</option><option value="ETI">ETI</option><option value="Grand groupe">Grand groupe</option></select>
+<select id="devisUrgency" required><option value="">-- Urgence --</option><option value="Diagnostic court terme (4 semaines)">Diagnostic court terme (4 semaines)</option><option value="Court terme (1-2 mois)">Court terme (1-2 mois)</option><option value="Moyen terme (2-6 mois)">Moyen terme (2-6 mois)</option><option value="Long terme (6-12 mois)">Long terme (6-12 mois)</option></select>
+<textarea id="devisMessage" placeholder="Détails de votre besoin..."></textarea>
+<div class="checkbox-group"><input type="checkbox" id="devisPrivacy" required><label for="devisPrivacy">J'accepte la <a href="/politique-confidentialite.html" target="_blank">politique de confidentialité</a></label></div>
+<button type="submit" class="btn btn-primary">Demander le devis</button>
+</form>
+</div>
+</div>
+
+<div id="achatModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('achatModal')">&times;</span>
+<h2 id="achatTitle">Sélectionner votre pack</h2>
+<div id="achatPackages" style="margin: 1.5rem 0;"></div>
+<p style="color: #ddd; font-size: 0.85rem; margin-top: 1rem; text-align: center;">Après sélection, vous serez redirigé pour finaliser votre commande.</p>
+</div>
+</div>
+
+<footer>
+<p>&copy; 2025 ZYQTRON — Serreau David</p>
+<p style="margin-top: 1rem; font-size: 0.9rem;">
+<a href="/mentions-legales.html">Mentions légales</a> | <a href="/politique-confidentialite.html">Politique de confidentialité</a> | <a onclick="openModal('contactModal')">Contact</a>
+</p>
+</footer>
+
+<button class="chatbot-btn" onclick="toggleChat()">💬</button>
+<div class="chatbot-container" id="chatContainer">
+<div class="chatbot-header">
+<h2>🛡️ Chat Zyqtron</h2>
+<button class="chatbot-close" onclick="toggleChat()">✕</button>
+</div>
+<div class="chatbot-messages" id="chatMessages"></div>
+<div class="chatbot-input-area">
+<input type="text" class="chatbot-input" id="chatInput" placeholder="Message..." onkeypress="if(event.key==='Enter') chatSend()">
+<button class="chatbot-send" id="chatSendBtn" onclick="chatSend()" disabled>→</button>
+</div>
+</div>
+
+<script>
+const chatState = { messages: [] };
+
+const allServices = [
+{id:1,theme:"THÈME 1",category:"Conseil & Audit",name:"Audit de maturité technologique",description:"Évaluation de la capacité d'une organisation à exploiter, protéger et monétiser ses actifs immatériels",pricing_bronze:750,pricing_argent:1500,pricing_or:3000},
+{id:2,theme:"THÈME 1",category:"Conseil & Audit",name:"Évaluation de la valeur d'un actif technologique",description:"Service d'estimation marchande et de potentiel de licensing pour entreprises",pricing_bronze:1000,pricing_argent:2000,pricing_or:4000},
+{id:3,theme:"THÈME 1",category:"Conseil & Audit",name:"Due diligence technologique",description:"Prestation pour investisseurs ou acquéreurs analysant la solidité d'un actif technologique",pricing_bronze:1250,pricing_argent:2500,pricing_or:5000},
+{id:49,theme:"THÈME 2",category:"Diagnostic & Audit",name:"Diagnostic de maturité cyber",description:"Évaluation 360 de la posture de sécurité avec scoring et benchmark sectoriel",pricing_bronze:1000,pricing_argent:2000,pricing_or:4000},
+{id:50,theme:"THÈME 2",category:"Diagnostic & Audit",name:"Cartographie des risques cyber",description:"Identification systématique et priorisation des risques selon impact métier",pricing_bronze:1250,pricing_argent:2500,pricing_or:5000},
+{id:51,theme:"THÈME 2",category:"Diagnostic & Audit",name:"Audit de conformité (ISO 27001, NIS2, DORA, RGPD)",description:"Vérification du niveau de conformité réglementaire avec gap analysis",pricing_bronze:1500,pricing_argent:3000,pricing_or:6000},
+{id:110,theme:"THÈME 3",category:"IA - Recherche & Sourcing",name:"Recherche d'acheteurs potentiels (IA)",description:"Identification automatisée de prospects qualifiés pour vos actifs THKL",pricing_bronze:null,pricing_argent:null,pricing_or:null},
+{id:114,theme:"THÈME 3",category:"IA - Production Documentaire",name:"Rédaction de teasers professionnels",description:"Création de pitch 1 page optimisé par IA à partir d'inputs structurés",pricing_bronze:200,pricing_argent:400,pricing_or:800},
+{id:126,theme:"THÈME 4",category:"Positionnement",name:"Étude de positionnement marché",description:"Définition de niche et différenciation par analyse concurrentielle",pricing_bronze:null,pricing_argent:null,pricing_or:null},
+{id:130,theme:"THÈME 4",category:"Offre & Pricing",name:"Structuration d'offre commerciale",description:"Architecture de packs et services cohérente avec parcours client clair",pricing_bronze:null,pricing_argent:null,pricing_or:null},
+{id:397,theme:"THÈME 11",category:"Social & Communautaire",name:"Personal Branding Exécutif",description:"Stratégie complète de positionnement d'un dirigeant comme leader de pensée",pricing_bronze:null,pricing_argent:null,pricing_or:null},
+{id:366,theme:"THÈME 13",category:"Web3 & Blockchain",name:"Web3 Strategy Sprint",description:"Cadrage use-cases, choix chain, architecture wallet",pricing_bronze:null,pricing_argent:null,pricing_or:null},
+{id:369,theme:"THÈME 13",category:"Web3 & Blockchain",name:"Développement Smart Contracts (Solidity/Rust)",description:"ERC-20, ERC-721, staking, vesting, access control",pricing_bronze:null,pricing_argent:null,pricing_or:null},
+{id:381,theme:"THÈME 14",category:"Code & Web Factory",name:"Scripting Python – Automatisation sur mesure",description:"Scripts Python, ETL, scheduling, logs",pricing_bronze:600,pricing_argent:1200,pricing_or:2400},
+{id:391,theme:"THÈME 15",category:"Publicité & Acquisition",name:"Meta Ads Performance",description:"Business Manager, Pixel, audiences, creatives, A/B tests",pricing_bronze:600,pricing_argent:1200,pricing_or:2400}
+];
+
+// Base de réponses intelligente du chatbot
+const chatbotResponses = {
+  "cyber|sécurité|audit": "🔒 Pour la cybersécurité et les audits, nous proposons:\n- Diagnostic de maturité cyber (€1000-4000)\n- Cartographie des risques (€1250-5000)\n- Audit de conformité ISO/RGPD (€1500-6000)\n\nQuel type de diagnostic vous intéresse?",
+  "ia|intelligence|technologie": "🤖 Nos services IA incluent:\n- Recherche d'acheteurs (IA) - sur devis\n- Rédaction de teasers (€200-800)\n- Documentation assistée par IA\n\nComment puis-je vous aider?",
+  "prix|tarif|coût|devis": "💰 Nous proposons 3 niveaux:\n📦 Bronze: De €200 à €1500\n📦 Argent: De €400 à €3000\n⭐ Or: De €800 à €6000\n\nPour un service spécifique, consultez notre catalogue ou demandez un devis!",
+  "actif|asset|licensing|thkl": "💼 Nos services pour les actifs technologiques:\n- Audit de maturité technologique (€750-3000)\n- Évaluation de valeur (€1000-4000)\n- Due diligence technologique (€1250-5000)\n- Valorisation et licensing\n\nQuel est votre besoin?",
+  "prestation|service|quoi": "Nous proposons 401 prestations dans 4 univers:\n🔒 Cybersécurité\n💼 Actifs THKL\n🤖 IA & Technologie\n📊 Stratégie & GTM\n\nConsultez notre catalogue complet!",
+  "contact|email|telephone": "📧 Vous pouvez nous contacter:\n- Support: support@zyqtron.com\n- Contact: contact@zyqtron.com\n- Devis: zyqtron.vault@gmail.com\n\nOu utilisez le formulaire 'Contact' en haut!",
+  "aide|help|comment": "👋 Bienvenue chez Zyqtron!\n\nNous valorisons vos actifs technologiques.\n\nVous pouvez me poser des questions sur:\n- Nos services\n- Les tarifs\n- La cybersécurité\n- L'IA et technologie\n\nQu'est-ce que vous recherchez?"
+};
+
+function toggleChat() {
+  const c = document.getElementById('chatContainer');
+  c.style.display = c.style.display === 'none' ? 'flex' : 'none';
+  if (c.style.display === 'flex' && chatState.messages.length === 0) {
+    displayMsg('bot', 'Bonjour! 👋 Bienvenue chez Zyqtron.\n\nNous valorisons les actifs technologiques (Technology/Know-How Licensing).\n\nComment puis-je vous aider?');
+  }
+}
+
+function displayMsg(type, text) {
+  const msgs = document.getElementById('chatMessages');
+  const msg = document.createElement('div');
+  msg.className = `chat-msg ${type}`;
+  msg.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+  msgs.appendChild(msg);
+  msgs.scrollTop = msgs.scrollHeight;
+  chatState.messages.push({role: type === 'user' ? 'user' : 'assistant', content: text});
+}
+
+function chatSend() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  displayMsg('user', text);
+  document.getElementById('chatSendBtn').disabled = true;
+
+  // Logique de réponse statique
+  const lowerText = text.toLowerCase();
+  let response = "Je n'ai pas bien compris. Pouvez-vous préciser? 😊";
+
+  for (const [keywords, reply] of Object.entries(chatbotResponses)) {
+    const keywordList = keywords.split('|');
+    if (keywordList.some(keyword => lowerText.includes(keyword))) {
+      response = reply;
+      break;
+    }
+  }
+
+  setTimeout(() => {
+    displayMsg('bot', response);
+    document.getElementById('chatSendBtn').disabled = false;
+    document.getElementById('chatInput').focus();
+  }, 300);
+}
+
+document.getElementById('chatInput').addEventListener('input', (e) => {
+  document.getElementById('chatSendBtn').disabled = !e.target.value.trim();
+});
+
+let currentFilter = 'TOUS';
+
+function renderServices() {
+  const container = document.getElementById('servicesContainer');
+  const searchTerm = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  let filtered = allServices;
+
+  if (currentFilter !== 'TOUS') {
+    filtered = filtered.filter(s => s.theme === currentFilter);
+  }
+
+  if (searchTerm) {
+    filtered = filtered.filter(s => (s.name || '').toLowerCase().includes(searchTerm) || (s.description || '').toLowerCase().includes(searchTerm));
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">Aucun service trouvé</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(service => {
+    const hasPrices = service.pricing_bronze || service.pricing_argent || service.pricing_or;
+    const pricingHtml = hasPrices ? `<div class="pricing-tiers">${service.pricing_bronze ? `<div class="tier"><span class="tier-label">Bronze:</span> €${service.pricing_bronze}</div>` : ''}${service.pricing_argent ? `<div class="tier"><span class="tier-label">Argent:</span> €${service.pricing_argent}</div>` : ''}${service.pricing_or ? `<div class="tier"><span class="tier-label">Or:</span> €${service.pricing_or}</div>` : ''}</div>` : `<div class="pricing-tiers"><div class="tier tier-devis">SUR DEVIS</div></div>`;
+    const btnHtml = hasPrices ? `<div class="action-buttons"><button class="btn btn-primary" onclick="openAchatModal(${service.id}, '${(service.name || '').replace(/'/g, "\\'")}')" >Sélectionner le pack</button></div>` : `<div class="action-buttons"><button class="btn btn-secondary" onclick="openDevisModal()">Demander un devis</button></div>`;
+    return `<div class="service-card"><div class="service-id">ID #${service.id}</div><div class="service-name">${service.name || 'Sans titre'}</div><div class="service-desc">${((service.description || '').substring(0, 100))}</div>${pricingHtml}${btnHtml}</div>`;
+  }).join('');
+}
+
+function updatePricingTable() {
+  const tbody = document.getElementById('pricingTableBody');
+  const withPrices = allServices.filter(s => s.pricing_bronze || s.pricing_argent || s.pricing_or);
+  if (withPrices.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4">Aucun tarif</td></tr>';
+    return;
+  }
+  tbody.innerHTML = withPrices.map(s => `<tr><td><strong>${s.name}</strong></td><td>${s.pricing_bronze ? '€' + s.pricing_bronze : '—'}</td><td>${s.pricing_argent ? '€' + s.pricing_argent : '—'}</td><td>${s.pricing_or ? '€' + s.pricing_or : '—'}</td></tr>`).join('');
+}
+
+function filterByTheme(e, theme) {
+  currentFilter = theme;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById('searchInput').value = '';
+  renderServices();
+}
+
+function filterAndScroll(theme) {
+  currentFilter = theme;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.textContent === theme);
+  if (btn) btn.classList.add('active');
+  document.getElementById('searchInput').value = '';
+  renderServices();
+  setTimeout(() => document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' }), 100);
+}
+
+function filterServices() {
+  renderServices();
+}
+
+function scrollToTop() {
+  document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToSection(sectionId) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function openModal(modalId) {
+  document.getElementById(modalId).style.display = 'block';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+function openDevisModal() {
+  document.getElementById('devisModal').style.display = 'block';
+}
+
+function openAchatModal(serviceId, serviceName) {
+  const service = allServices.find(s => s.id == serviceId);
+  if (!service) return;
+  document.getElementById('achatTitle').innerText = serviceName;
+  const packagesHtml = `<div class="action-buttons">${service.pricing_bronze ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Bronze', ${service.pricing_bronze})">📦 Pack Bronze - €${service.pricing_bronze}</button>` : ''}${service.pricing_argent ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Argent', ${service.pricing_argent})">📦 Pack Argent - €${service.pricing_argent}</button>` : ''}${service.pricing_or ? `<button class="btn btn-primary" onclick="redirectToPayment('${serviceName.replace(/'/g, "\\'")}', 'Or', ${service.pricing_or})">⭐ Pack Or - €${service.pricing_or}</button>` : ''}</div>`;
+  document.getElementById('achatPackages').innerHTML = packagesHtml;
+  document.getElementById('achatModal').style.display = 'block';
+}
+
+function redirectToPayment(serviceName, packName, price) {
+  const subject = `Achat: ${serviceName} - Pack ${packName}`;
+  const body = `Bonjour,\n\nJe souhaite acheter:\nService: ${serviceName}\nPack: ${packName}\nPrix: €${price}\n\nVeuillez me contacter pour finaliser.\n\nCordialement`;
+  window.location.href = `mailto:zyqtron.vault@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function submitDevis(e) {
+  e.preventDefault();
+  const name = document.getElementById('devisName').value;
+  const email = document.getElementById('devisEmail').value;
+  const company = document.getElementById('devisCompany').value;
+  const status = document.getElementById('devisStatus').value;
+  const urgency = document.getElementById('devisUrgency').value;
+  const message = document.getElementById('devisMessage').value;
+  const subject = `Demande de devis - ${name}`;
+  const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\nStatut: ${status}\nUrgence: ${urgency}\n\nMessage:\n${message}`;
+  window.location.href = `mailto:zyqtron.vault@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  document.getElementById('devisModal').style.display = 'none';
+}
+
+function submitContact(e) {
+  e.preventDefault();
+  const type = document.getElementById('contactType').value;
+  const name = document.getElementById('contactName').value;
+  const email = document.getElementById('contactEmail').value;
+  const company = document.getElementById('contactCompany').value;
+  const message = document.getElementById('contactMessage').value;
+  const emails = { support: 'support@zyqtron.com', contact: 'contact@zyqtron.com', devis: 'zyqtron.vault@gmail.com' };
+  const contactEmail = emails[type] || 'contact@zyqtron.com';
+  const subject = `[${type.toUpperCase()}] ${name} - ${company}`;
+  const body = `Nom: ${name}\nEmail: ${email}\nEntreprise: ${company}\n\nMessage:\n${message}`;
+  window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  document.getElementById('contactModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+  document.querySelectorAll('.modal').forEach(modal => {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+}
+
+renderServices();
+updatePricingTable();
+</script>
 </body>
 </html>
