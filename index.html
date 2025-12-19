@@ -112,8 +112,51 @@ footer a:hover { text-decoration: underline; }
   color: #d4af37;
   text-decoration: underline;
 }
-.chatbot-btn { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: var(--color-dark); border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; font-size: 24px; z-index: 9998; font-weight: bold; transition: all 0.3s; box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4); }
-.chatbot-btn:hover { transform: scale(1.1); background: var(--color-accent); }
+.chatbot-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--color-primary);
+  color: var(--color-dark);
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 9998;
+  font-weight: bold;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+}
+
+/* Tooltip simple "Chat Zyqtron" */
+.chatbot-btn::after {
+  content: "Chat Zyqtron";
+  position: absolute;
+  right: 70px;
+  bottom: 50%;
+  transform: translateY(50%);
+  background: #000;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.chatbot-btn:hover {
+  transform: scale(1.1);
+  background: var(--color-accent);
+}
+
+.chatbot-btn:hover::after {
+  opacity: 1;
+}
+
 .chatbot-container { position: fixed; bottom: 100px; right: 30px; width: 90vw; max-width: 500px; height: 80vh; max-height: 700px; background: var(--color-dark); border: 1px solid var(--color-primary); border-radius: 12px; display: none; flex-direction: column; z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
 .chatbot-header { background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); padding: 1.5rem; border-bottom: 1px solid var(--color-primary); display: flex; justify-content: space-between; align-items: center; }
 .chatbot-header h2 { color: var(--color-primary); font-size: 1.1rem; margin: 0; }
