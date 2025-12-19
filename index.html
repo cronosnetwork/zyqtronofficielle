@@ -456,8 +456,18 @@ function toggleChat() {
   const c = document.getElementById('chatContainer');
   c.style.display = c.style.display === 'none' ? 'flex' : 'none';
   if (c.style.display === 'flex' && chatState.messages.length === 0) {
-    displayMsg('bot', 'Bonjour! 👋 Bienvenue chez Zyqtron.\n\nNous valorisons les actifs technologiques (Technology/Know-How Licensing).\n\nComment puis-je vous aider?');
-  }
+  displayMsg('bot',
+`Bonjour 👋, ici le Chat Zyqtron.
+
+Je peux vous aider à :
+- Comprendre nos 4 univers (Cybersécurité, Actifs THKL, IA & Tech, Stratégie & GTM)
+- Trouver la bonne prestation dans le catalogue
+- Avoir un ordre de prix
+- Vous guider pour une demande de devis
+
+Que cherchez-vous aujourd'hui ?`);
+}
+
 }
 
 function displayMsg(type, text) {
