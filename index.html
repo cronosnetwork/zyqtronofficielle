@@ -146,10 +146,15 @@ nav { display: none; }
 <div class="flex">
 <div class="logo" onclick="scrollToTop()" style="cursor: pointer;">🛡️ ZYQTRON</div>
 <nav>
-<a onclick="scrollToSection('univers')">Univers</a>
-<a href="https://zyqtron.com/catalogue.complet.html">Catalogue</a>
-<a onclick="openModal('tarifModal')">Tarifs</a>
-<a onclick="openModal('contactModal')">Contact</a>
+  <ul>
+    <li><a onclick="scrollToSection('univers')">Univers</a></li>
+
+    <!-- NOUVEL ÉLÉMENT DE MENU -->
+    <li><a href="catalogue.complet.html">Catalogue complet</a></li>
+
+    <li><a onclick="scrollToSection('tarifs')">Tarifs</a></li>
+    <li><a onclick="scrollToSection('contact')">Contact</a></li>
+  </ul>
 </nav>
 </div>
 </div>
