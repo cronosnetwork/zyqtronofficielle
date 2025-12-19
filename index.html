@@ -482,11 +482,17 @@ function chatSend() {
   const lowerText = text.toLowerCase();
   let response = "Je n'ai pas bien compris. Pouvez-vous préciser? 😊";
 
-  // Réponses rapides avec liens directs
+    // Réponses rapides avec liens directs
   if (lowerText.includes("tarif") || lowerText.includes("prix") || lowerText.includes("coût")) {
     response = `Vous pouvez consulter la page <a href="/tarifs-zyqtron.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Tarifs Zyqtron</a> pour des fourchettes détaillées par univers.`;
   } else if (lowerText.includes("thkl") || lowerText.includes("licensing") || lowerText.includes("licence") || lowerText.includes("know-how")) {
     response = `Pour une explication complète du Technology / Know-How Licensing (THKL), ouvrez la page dédiée : <a href="/technology-know-how-licensing-THKL-guide-acheteurs.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Actifs THKL</a>.`;
+  } else if (lowerText.includes("cyber") || lowerText.includes("sécurité") || lowerText.includes("soc") || lowerText.includes("rgpd")) {
+    response = `Pour une vue d'ensemble de nos offres 🔒 Cybersécurité, ouvrez la page : <a href="/cybersecurite-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers Cybersécurité</a>.`;
+  } else if (lowerText.includes("ia") || lowerText.includes("intelligence") || lowerText.includes("technologie") || lowerText.includes("ai")) {
+    response = `Pour découvrir nos services 🤖 IA & Technologie, consultez : <a href="/ia-technologie-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers IA & Technologie</a>.`;
+  } else if (lowerText.includes("stratégie") || lowerText.includes("gtm") || lowerText.includes("go-to-market") || lowerText.includes("marketing")) {
+    response = `Pour la partie 📊 Stratégie & Go-to-Market, vous pouvez lire : <a href="/strategie-gtm-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers Stratégie & GTM</a>.`;
   } else if (lowerText.includes("contact") || lowerText.includes("devis") || lowerText.includes("rendez-vous") || lowerText.includes("rdv")) {
     response = `Pour nous écrire, utilisez le formulaire <a href="/#contact" style="color:#D4A574; text-decoration:underline;">Contact / Demande de devis</a> en bas de la page d'accueil.`;
   } else if (lowerText.includes("catalogue") || lowerText.includes("liste") || lowerText.includes("401")) {
@@ -501,6 +507,7 @@ function chatSend() {
       }
     }
   }
+
 
   setTimeout(() => {
     displayMsg('bot', response);
