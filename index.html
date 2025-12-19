@@ -668,6 +668,11 @@ window.onclick = function(event) {
     }
   });
 }
+function translatePage() {
+  const url = encodeURIComponent(window.location.href);
+  // FR → EN (tu pourras changer la langue cible plus tard)
+  window.open(`https://translate.google.com/translate?sl=fr&tl=en&u=${url}`, '_blank');
+}
 
 renderServices();
 updatePricingTable();
