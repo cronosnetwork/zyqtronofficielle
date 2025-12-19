@@ -107,7 +107,7 @@ Les tarifs exacts sont indiqués sur les pages spécifiques lorsqu’il s’agit
 ## 6. Comment obtenir un devis précis ?
 
 1. Choisissez votre **univers** (Cybersécurité, Actifs THKL, IA & Technologie, Stratégie & GTM).  
-2. Précisez votre contexte (taille, secteur, objectifs, délais).  
-3. Nous vous proposons un **scénario de mission** avec périmètre clair, livrables, planning et prix ferme (ou grille de licence dans le cas des actifs THKL / IA).
+2. Préparez quelques éléments de contexte (taille, secteur, objectifs, délai souhaité).  
+3. Envoyez‑nous ces éléments via le [formulaire de contact](/#contact).  
 
 Les fourchettes ci‑dessus vous donnent un repère ; le devis final est ajusté pour refléter précisément votre situation et maximiser le retour sur investissement.
