@@ -364,14 +364,93 @@ const allServices = [
 
 // Base de réponses intelligente du chatbot
 const chatbotResponses = {
-  "cyber|sécurité|audit": "🔒 Pour la cybersécurité et les audits, nous proposons:\n- Diagnostic de maturité cyber (€1000-4000)\n- Cartographie des risques (€1250-5000)\n- Audit de conformité ISO/RGPD (€1500-6000)\n\nQuel type de diagnostic vous intéresse?",
-  "ia|intelligence|technologie": "🤖 Nos services IA incluent:\n- Recherche d'acheteurs (IA) - sur devis\n- Rédaction de teasers (€200-800)\n- Documentation assistée par IA\n\nComment puis-je vous aider?",
-  "prix|tarif|coût|devis": "💰 Nous proposons 3 niveaux:\n📦 Bronze: De €200 à €1500\n📦 Argent: De €400 à €3000\n⭐ Or: De €800 à €6000\n\nPour un service spécifique, consultez notre catalogue ou demandez un devis!",
-  "actif|asset|licensing|thkl": "💼 Nos services pour les actifs technologiques:\n- Audit de maturité technologique (€750-3000)\n- Évaluation de valeur (€1000-4000)\n- Due diligence technologique (€1250-5000)\n- Valorisation et licensing\n\nQuel est votre besoin?",
-  "prestation|service|quoi": "Nous proposons 401 prestations dans 4 univers:\n🔒 Cybersécurité\n💼 Actifs THKL\n🤖 IA & Technologie\n📊 Stratégie & GTM\n\nConsultez notre catalogue complet!",
-  "contact|email|telephone": "📧 Vous pouvez nous contacter:\n- Support: support@zyqtron.com\n- Contact: contact@zyqtron.com\n- Devis: zyqtron.vault@gmail.com\n\nOu utilisez le formulaire 'Contact' en haut!",
-  "aide|help|comment": "👋 Bienvenue chez Zyqtron!\n\nNous valorisons vos actifs technologiques.\n\nVous pouvez me poser des questions sur:\n- Nos services\n- Les tarifs\n- La cybersécurité\n- L'IA et technologie\n\nQu'est-ce que vous recherchez?"
+  // Univers & orientation
+  "univers|offre|proposez|prestations|services": 
+`Nous structurons 401 prestations autour de 4 univers :
+🔒 Cybersécurité
+💼 Actifs THKL (Technology / Know-How Licensing)
+🤖 IA & Technologie
+📊 Stratégie & Go-to-Market (GTM)
+
+Vous pouvez aussi consulter le catalogue complet depuis la page d'accueil.`,
+
+  "cyber|sécurité|audit|soc|rgpd|iso|nis2|dora": 
+`🔒 Univers Cybersécurité :
+- Diagnostic de maturité cyber
+- Cartographie des risques
+- Audits de conformité (ISO 27001, NIS2, DORA, RGPD)
+- SOC / MDR, plans de réponse à incident, forensic
+
+Pour une vue détaillée, cliquez sur "Cybersécurité" dans les 4 univers de la page d'accueil.`,
+
+  "thkl|licensing|licence|know-how|actif technologique|asset": 
+`💼 Univers Actifs THKL :
+Nous aidons à valoriser et licencier des actifs technologiques (Technology / Know-How Licensing).
+
+Vous pouvez lire la page dédiée "Actifs THKL" (bouton sur la page d'accueil) pour une explication complète, puis demander un devis si besoin.`,
+
+  "ia|intelligence|technologie|ai": 
+`🤖 Univers IA & Technologie :
+- Recherche & veille assistées par IA
+- Production de teasers, decks, scripts
+- Standardisation de documentation
+- Actifs IA packagés
+
+Le bouton "IA & Technologie" sur la page d'accueil ouvre une page dédiée avec plus de détails.`,
+
+  "stratégie|gtm|go-to-market|positionnement|pricing|offre|commercial": 
+`📊 Univers Stratégie & GTM :
+- Positionnement et personas
+- Structuration d'offres et pricing
+- Go-to-market (outbound / inbound / partenariats)
+- Process commerciaux et roadmaps 90/180/365 jours
+
+Cliquez sur "Stratégie & GTM" dans les 4 univers pour découvrir cet axe.`,
+
+  // Tarifs
+  "tarif|prix|coût|combien|€": 
+`💰 Aperçu des tarifs :
+- Diagnostics et audits : à partir d'environ 1 000 € (Bronze), jusqu'à 6 000 € (Or) pour des missions complètes.
+- Documentation et dossiers : de quelques centaines d'euros pour un teaser à plusieurs milliers pour un dossier FULL.
+- Stratégie & GTM : missions typiques entre 2 000 € et 5 000 €.
+
+Pour des fourchettes par univers, consultez la page "Tarifs" dans le menu.`,
+
+  // B2B / B2C
+  "particulier|b2c|formation|coaching": 
+`Oui, nous travaillons aussi avec les particuliers, notamment sur :
+- Formations (cyber, IA, méthodes Zyqtron)
+- Coaching et accompagnement individuel
+- Produits digitaux
+
+Le diagnostic d'entrée reste le même : nous partons de votre besoin, puis nous proposons la bonne prestation.`,
+
+  // Contact / devis
+  "contact|email|téléphone|devis|rdv|rendez-vous": 
+`📧 Pour nous contacter ou demander un devis :
+- Support : support@zyqtron.com
+- Contact général : contact@zyqtron.com
+- Devis : zyqtron.vault@gmail.com
+
+Vous pouvez aussi utiliser le formulaire "Contact / Demande de devis" en bas de page : le chatbot peut vous y rediriger.`,
+
+  // Catalogue
+  "catalogue|liste|401|prestations": 
+`Le catalogue complet (401 prestations) est accessible depuis la page d'accueil via le lien "Catalogue Complet Zyqtron".
+Vous pouvez filtrer par THÈME et voir quelques exemples de prix (Bronze / Argent / Or).`,
+
+  // Message d'aide générique
+  "aide|help|comment|bonjour|salut": 
+`👋 Bienvenue chez Zyqtron !
+
+Je peux vous aider à :
+- Comprendre nos 4 univers (Cybersécurité, Actifs THKL, IA & Tech, Stratégie & GTM)
+- Vous orienter vers la bonne page (THKL, Tarifs, Catalogue)
+- Vous guider pour une demande de devis
+
+Posez votre question en langage naturel, ou demandez-moi par exemple "tarifs cybersécurité" ou "expliquer THKL".`
 };
+
 
 function toggleChat() {
   const c = document.getElementById('chatContainer');
