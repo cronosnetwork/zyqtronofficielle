@@ -177,11 +177,29 @@ footer a:hover { text-decoration: underline; }
 .chatbot-messages::-webkit-scrollbar { width: 6px; }
 .chatbot-messages::-webkit-scrollbar-thumb { background: var(--color-primary); }
 @media (max-width: 768px) {
-h1 { font-size: 1.8rem; }
-nav { display: none; }
-.universes { grid-template-columns: 1fr; }
-.services-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 1.8rem; }
+
+  /* Si tu veux vraiment cacher le menu sur mobile */
+  /* nav { display: none; } */
+
+  .universes { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+
+  /* Ajustement bulle chatbot + fenêtre sur mobile */
+  .chatbot-btn {
+    bottom: 15px;
+    right: 15px;
+    transform: scale(0.85);
+  }
+
+  .chatbot-container {
+    bottom: 80px;
+    right: 5px;
+    width: 95vw;
+    height: 75vh;
+  }
 }
+
 </style>
 </head>
 <body>
