@@ -524,42 +524,87 @@ function chatSend() {
   displayMsg('user', text);
   document.getElementById('chatSendBtn').disabled = true;
 
+  async function generateBotResponse(text) {
   const lowerText = text.toLowerCase();
-  let response = "Je n'ai pas bien compris. Pouvez-vous préciser? 😊";
+  let response = "Je n'ai pas bien compris. Pouvez-vous préciser ? 😊";
 
-    // Réponses rapides avec liens directs
+  // Réponses rapides avec liens directs (on garde ta logique)
   if (lowerText.includes("tarif") || lowerText.includes("prix") || lowerText.includes("coût")) {
-    response = `Vous pouvez consulter la page <a href="/tarifs-zyqtron.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Tarifs Zyqtron</a> pour des fourchettes détaillées par univers.`;
+    return `Vous pouvez consulter la page <a href="/tarifs-zyqtron.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Tarifs Zyqtron</a> pour des fourchettes détaillées par univers.`;
   } else if (lowerText.includes("thkl") || lowerText.includes("licensing") || lowerText.includes("licence") || lowerText.includes("know-how")) {
-    response = `Pour une explication complète du Technology / Know-How Licensing (THKL), ouvrez la page dédiée : <a href="/technology-know-how-licensing-THKL-guide-acheteurs.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Actifs THKL</a>.`;
+    return `Pour une explication complète du Technology / Know-How Licensing (THKL), ouvrez la page dédiée : <a href="/technology-know-how-licensing-THKL-guide-acheteurs.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Actifs THKL</a>.`;
   } else if (lowerText.includes("cyber") || lowerText.includes("sécurité") || lowerText.includes("soc") || lowerText.includes("rgpd")) {
-    response = `Pour une vue d'ensemble de nos offres 🔒 Cybersécurité, ouvrez la page : <a href="/cybersecurite-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers Cybersécurité</a>.`;
+    return `Pour une vue d'ensemble de nos offres 🔒 Cybersécurité, ouvrez la page : <a href="/cybersecurite-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers Cybersécurité</a>.`;
   } else if (lowerText.includes("ia") || lowerText.includes("intelligence") || lowerText.includes("technologie") || lowerText.includes("ai")) {
-    response = `Pour découvrir nos services 🤖 IA & Technologie, consultez : <a href="/ia-technologie-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers IA & Technologie</a>.`;
+    return `Pour découvrir nos services 🤖 IA & Technologie, consultez : <a href="/ia-technologie-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers IA & Technologie</a>.`;
   } else if (lowerText.includes("stratégie") || lowerText.includes("gtm") || lowerText.includes("go-to-market") || lowerText.includes("marketing")) {
-    response = `Pour la partie 📊 Stratégie & Go-to-Market, vous pouvez lire : <a href="/strategie-gtm-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers Stratégie & GTM</a>.`;
+    return `Pour la partie 📊 Stratégie & Go-to-Market, vous pouvez lire : <a href="/strategie-gtm-univers.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Univers Stratégie & GTM</a>.`;
   } else if (lowerText.includes("contact") || lowerText.includes("devis") || lowerText.includes("rendez-vous") || lowerText.includes("rdv")) {
-    response = `Pour nous écrire, utilisez le formulaire <a href="/#contact" style="color:#D4A574; text-decoration:underline;">Contact / Demande de devis</a> en bas de la page d'accueil.`;
+    return `Pour nous écrire, utilisez le formulaire <a href="/#contact" style="color:#D4A574; text-decoration:underline;">Contact / Demande de devis</a> en bas de la page d'accueil.`;
   } else if (lowerText.includes("catalogue") || lowerText.includes("liste") || lowerText.includes("401")) {
-    response = `Le <a href="/catalogue.complet.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Catalogue Complet Zyqtron</a> présente les 401 prestations avec filtres par THÈME.`;
-  } else {
-    // Logique de réponse statique basée sur les mots-clés
-    for (const [keywords, reply] of Object.entries(chatbotResponses)) {
-      const keywordList = keywords.split('|');
-      if (keywordList.some(keyword => lowerText.includes(keyword))) {
-        response = reply;
-        break;
-      }
-    }
+    return `Le <a href="/catalogue.complet.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Catalogue Complet Zyqtron</a> présente les 401 prestations avec filtres par THÈME.`;
   }
 
+  // Si on arrive ici : on laisse Groq répondre
+  const API_URL = 'https://lovely-monstera-6f3195.netlify.app/.netlify/functions/groq-chat';
 
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    });
+
+    if (!res.ok) {
+      console.error('Erreur API Groq', res.status);
+      return "Je rencontre un problème technique avec l’API. Réessayez dans quelques instants.";
+    }
+
+    const data = await res.json();
+    return data.reply || "Je n’ai pas pu formuler de réponse exploitable.";
+  } catch (err) {
+    console.error('Erreur réseau Groq', err);
+    return "Impossible de joindre le service pour le moment. Vérifiez votre connexion ou réessayez plus tard.";
+  }
+}
+
+
+
+  async function handleUserMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // reset champ + désactiver le bouton
+  input.value = '';
+  document.getElementById('chatSendBtn').disabled = true;
+
+  // message utilisateur
+  displayMsg('user', text);
+
+  // APPEL à Groq ou réponses rapides
+  const response = await generateBotResponse(text);
+
+  // affichage de la réponse du bot
   setTimeout(() => {
     displayMsg('bot', response);
     document.getElementById('chatSendBtn').disabled = false;
     document.getElementById('chatInput').focus();
   }, 300);
 }
+
+// écouteurs (tu peux les laisser si tu les as déjà)
+document.getElementById('chatSendBtn').addEventListener('click', handleUserMessage);
+document.getElementById('chatInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    handleUserMessage();
+  }
+});
+document.getElementById('chatInput').addEventListener('input', (e) => {
+  document.getElementById('chatSendBtn').disabled = !e.target.value.trim();
+});
+
 
 document.getElementById('chatInput').addEventListener('input', (e) => {
   document.getElementById('chatSendBtn').disabled = !e.target.value.trim();
