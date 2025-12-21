@@ -490,19 +490,21 @@ Posez votre question en langage naturel, ou demandez-moi par exemple "tarifs cyb
 function toggleChat() {
   const c = document.getElementById('chatContainer');
   c.style.display = c.style.display === 'none' ? 'flex' : 'none';
+
+  // Message d'accueil uniquement à la toute première ouverture
   if (c.style.display === 'flex' && chatState.messages.length === 0) {
-  displayMsg('bot',
+    displayMsg(
+      'bot',
 `Bonjour 👋, ici le Chat Zyqtron.
 
 Je peux vous aider à :
-- Comprendre nos 4 univers (Cybersécurité, Actifs THKL, IA & Tech, Stratégie & GTM)
-- Trouver la bonne prestation dans le catalogue
-- Avoir un ordre de prix
-- Vous guider pour une demande de devis
+- clarifier votre situation (diagnostic structuré),
+- trouver l’univers Zyqtron pertinent (Cybersécurité, Actifs THKL, IA & Tech, Stratégie & GTM),
+- esquisser une piste d’offre ou de pack à partir de votre besoin.
 
-Que cherchez-vous aujourd'hui ?`);
-}
-
+Que voulez-vous comprendre ou obtenir en priorité aujourd’hui ?`
+    );
+  }
 }
 
 function displayMsg(type, text) {
@@ -512,8 +514,19 @@ function displayMsg(type, text) {
   msg.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
   msgs.appendChild(msg);
   msgs.scrollTop = msgs.scrollHeight;
-  chatState.messages.push({role: type === 'user' ? 'user' : 'assistant', content: text});
+  chatState.messages.push({
+    role: type === 'user' ? 'user' : 'assistant',
+    content: text
+  });
 }
+
+// Ouvrir le chat automatiquement à l'arrivée sur la page
+window.addEventListener('load', () => {
+  const c = document.getElementById('chatContainer');
+  if (c && c.style.display !== 'flex') {
+    toggleChat();
+  }
+});
 
 const API_URL = 'https://lovely-monstera-6f3195.netlify.app/.netlify/functions/groq-chat';
 
