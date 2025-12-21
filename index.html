@@ -521,12 +521,21 @@ function displayMsg(type, text) {
 }
 
 // Ouvrir le chat automatiquement à l'arrivée sur la page
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const c = document.getElementById('chatContainer');
-  if (c && c.style.display !== 'flex') {
+  if (!c) return;
+
+  // S'assurer d'un état de départ propre
+  if (!c.style.display) {
+    c.style.display = 'none';
+  }
+
+  // Ouvre le chat une seule fois au chargement
+  if (c.style.display !== 'flex') {
     toggleChat();
   }
 });
+
 
 const API_URL = 'https://lovely-monstera-6f3195.netlify.app/.netlify/functions/groq-chat';
 
