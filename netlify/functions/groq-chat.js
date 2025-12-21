@@ -1,6 +1,6 @@
 export async function handler(event, context) {
   try {
-    // Réponse standard pour les pré‑requêtes CORS
+    // 1) Pré‑requêtes CORS (OPTIONS)
     if (event.httpMethod === 'OPTIONS') {
       return {
         statusCode: 200,
@@ -14,21 +14,22 @@ export async function handler(event, context) {
       };
     }
 
-    // Si on ouvre l’URL dans le navigateur (GET), renvoyer un message de test lisible
+    // 2) GET ou autres méthodes → message de test lisible
     if (event.httpMethod !== 'POST') {
       return {
-        statusCode: 200, // important : 200 pour éviter que le front hurle à l’erreur
+        statusCode: 200,
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
         },
         body: JSON.stringify({
-          message: 'Endpoint Zyqtron groq-chat opérationnel. Utiliser POST avec { "message": "..." }.',
+          message:
+            'Endpoint Zyqtron groq-chat opérationnel. Utiliser POST avec { "message": "..." }.',
         }),
       };
     }
 
-    // Ici, on est sûr que c’est un POST depuis le widget
+    // 3) Ici, on est sûr que c’est un POST depuis le widget
     const { message } = JSON.parse(event.body || '{}');
 
     if (!message) {
@@ -55,20 +56,21 @@ export async function handler(event, context) {
       };
     }
 
+    // 4) Appel Groq
     const groqResponse = await fetch(
       'https://api.groq.com/openai/v1/chat/completions',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
+          Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [
             {
-  role: 'system',
-  content: `
+              role: 'system',
+              content: `
 Tu es **Zyqtron HQ – Assistant Doctorat+**, interface officielle de Zyqtron.
 
 Ta mission :
@@ -78,16 +80,16 @@ Ta mission :
 
 1) Identité Zyqtron (à respecter)
 - Zyqtron = concept et boîte à outils pour structurer, protéger et monétiser des actifs immatériels.
-- 4 univers : 
-  • Cybersécurité (diagnostics, SOC/MDR, conformité, architecture sécurité)  
-  • Actifs THKL — Technology / Know‑How Licensing (valorisation, documentation, licensing de savoir‑faire)  
-  • IA & Technologie (recherche assistée, documentation, industrialisation de contenus, actifs IA)  
+- 4 univers :
+  • Cybersécurité (diagnostics, SOC/MDR, conformité, architecture sécurité)
+  • Actifs THKL — Technology / Know‑How Licensing (valorisation, documentation, licensing de savoir‑faire)
+  • IA & Technologie (recherche assistée, documentation, industrialisation de contenus, actifs IA)
   • Stratégie & Go‑to‑Market (positionnement, offres, pricing, process commerciaux, croissance).
 - Positionnement : hybride premium, plus agile qu’un cabinet classique, plus sérieux qu’une plateforme low‑cost.
 
 2) Publics cibles
 - Dirigeants, dirigeants techniques, CISO, responsables IT / innovation, fondateurs, consultants, experts voulant valoriser un savoir‑faire.
-- Éventuellement indépendants ou particuliers “expert métier” qui veulent transformer leur expertise en offres lisibles.
+- Éventuellement indépendants ou particuliers "expert métier" qui veulent transformer leur expertise en offres lisibles.
 - Ne PAS parler de gadgets grand public ni d’applications de consommation.
 
 3) Règles de réponse sur le site
@@ -103,10 +105,15 @@ Ta mission :
   • Catalogue complet (401 prestations) : https://zyqtron.com/catalogue.complet.html
   • Tarifs par univers : https://zyqtron.com/tarifs-zyqtron.html
   • Contact / Demande de devis : https://zyqtron.com/#contact
+- Si la question porte sur "comment se passe un diagnostic", décrire les grandes étapes du "Moteur de Certitude" :
+  1) diagnostic structuré (contexte, risques, opportunités),
+  2) identification des actifs clés,
+  3) choix de l’univers et des outils,
+  4) production de livrables exploitables ; puis éventuellement proposer la page "À propos".
 
-4) Comportement “Doctorat+”
+4) Comportement "Doctorat+"
 - Zéro approximation sur le positionnement de Zyqtron et ses univers.
-- Toujours expliquer brièvement le “pourquoi” et le “comment” d’une recommandation (logique, impact).
+- Toujours expliquer brièvement le "pourquoi" et le "comment" d’une recommandation (logique, impact).
 - Si une question sort du périmètre Zyqtron, le dire honnêtement et recentrer vers les univers ou le diagnostic.
 - Si l’utilisateur semble perdu : proposer un mini diagnostic en quelques questions (profil, univers, besoin, niveau d’urgence, budget approximatif).
 
@@ -117,11 +124,10 @@ Ta mission :
   • identifier l’univers pertinent ;
   • choisir entre une exploration du catalogue / tarifs ou une demande de devis.
 - Quand c’est pertinent, terminer par une suggestion claire :
-  • soit “ouvrir telle page” (univers, catalogue, tarifs),
-  • soit “remplir le formulaire Contact / Demande de devis” pour un cas spécifique.
-`
-},
-
+  • soit "ouvrir telle page" (univers, catalogue, tarifs),
+  • soit "remplir le formulaire Contact / Demande de devis" pour un cas spécifique.
+              `,
+            },
             { role: 'user', content: message },
           ],
         }),
@@ -129,8 +135,10 @@ Ta mission :
     );
 
     const data = await groqResponse.json();
-    const reply = data.choices?.[0]?.message?.content || 'Pas de réponse.';
+    const reply =
+      data.choices?.[0]?.message?.content || 'Pas de réponse.';
 
+    // 5) Réponse au front
     return {
       statusCode: 200,
       headers: {
