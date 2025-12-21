@@ -520,6 +520,20 @@ const API_URL = 'https://lovely-monstera-6f3195.netlify.app/.netlify/functions/g
 async function generateBotResponse(text) {
   const lowerText = text.toLowerCase();
 
+  // Réponse dédiée pour le diagnostic / Moteur de Certitude
+  if (
+    lowerText.includes("diagnostic") ||
+    lowerText.includes("moteur de certitude")
+  ) {
+    return `Le diagnostic Zyqtron suit un processus appelé "Moteur de Certitude" en quatre grandes étapes :
+1. Diagnostic structuré : analyse de votre contexte, de vos risques et de vos opportunités pour comprendre précisément votre situation.
+2. Identification des actifs clés : repérage des savoir‑faire, méthodes, architectures ou contenus immatériels à forte valeur.
+3. Choix de l’univers et des outils : sélection de l’univers Zyqtron le plus pertinent (Cybersécurité, Actifs THKL, IA & Technologie ou Stratégie & Go‑to‑Market) et des bons leviers d’action.
+4. Production de livrables exploitables : livrables clairs (plans d’action, packs, dossiers, bundles) qui vous permettent de décider et d’agir.
+
+Pour une vision détaillée de l’approche Zyqtron, vous pouvez aussi consulter la page À propos : https://zyqtron.com/apropos-zyqtron.html`;
+  }
+
   // Réponses rapides avec liens directs
   if (lowerText.includes("tarif") || lowerText.includes("prix") || lowerText.includes("coût")) {
     return `Vous pouvez consulter la page <a href="/tarifs-zyqtron.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Tarifs Zyqtron</a> pour des fourchettes détaillées par univers.`;
