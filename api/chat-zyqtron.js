@@ -1,6 +1,5 @@
 // api/chat-zyqtron.js
 export default async function handler(req, res) {
-  // Autoriser uniquement POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Méthode non autorisée' });
   }
@@ -11,7 +10,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'messages manquant' });
     }
 
-    // Récupérer la clé API Groq depuis les variables d'environnement Vercel
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
     if (!GROQ_API_KEY) {
       console.error('GROQ_API_KEY manquante');
@@ -33,9 +31,15 @@ export default async function handler(req, res) {
       })
     });
 
+    // Afficher plus de détails en cas d'erreur
     if (!groqResponse.ok) {
-      console.error('Erreur Groq API', groqResponse.status);
-      return res.status(502).json({ error: 'Erreur API Groq' });
+      const errorText = await groqResponse.text();
+      console.error('Erreur Groq API', groqResponse.status, errorText);
+      return res.status(502).json({ 
+        error: 'Erreur API Groq',
+        status: groqResponse.status,
+        details: errorText.substring(0, 200) // Premiers 200 caractères
+      });
     }
 
     const data = await groqResponse.json();
@@ -45,6 +49,6 @@ export default async function handler(req, res) {
 
   } catch (e) {
     console.error('Erreur handler', e);
-    return res.status(500).json({ error: 'Erreur serveur' });
+    return res.status(500).json({ error: 'Erreur serveur', message: e.message });
   }
 }
