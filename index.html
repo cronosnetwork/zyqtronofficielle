@@ -571,27 +571,6 @@ async function sendToBot() {
   return data.reply || "Désolé, je n'ai pas pu générer de réponse.";
 }
 
-// Gestion de l'envoi du message utilisateur
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('chatForm');
-  const input = document.getElementById('chatInput');
-
-  if (!form || !input) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const text = input.value.trim();
-    if (!text) return;
-
-    displayMsg('user', text);
-    input.value = '';
-
-    (async () => {
-      const reply = await sendToBot();
-      displayMsg('bot', reply);
-    })();
-  });
-});
 
 
 async function generateBotResponse(text) {
