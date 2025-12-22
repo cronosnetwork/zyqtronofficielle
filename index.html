@@ -653,21 +653,50 @@ async function handleUserMessage() {
   }, 300);
 }
 
+async function handleUserMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  document.getElementById('chatSendBtn').disabled = true;
+
+  displayMsg('user', text);
+
+  const response = await generateBotResponse(text);
+
+  setTimeout(() => {
+    displayMsg('bot', response);
+    document.getElementById('chatSendBtn').disabled = false;
+    document.getElementById('chatInput').focus();
+  }, 300);
+}
+
 // bouton et clavier utilisent TOUS handleUserMessage
 function chatSend() {
   handleUserMessage();
 }
 
-document.getElementById('chatSendBtn').addEventListener('click', handleUserMessage);
-document.getElementById('chatInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    handleUserMessage();
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  const sendBtn = document.getElementById('chatSendBtn');
+  const input = document.getElementById('chatInput');
+
+  if (!sendBtn || !input) return;
+
+  sendBtn.addEventListener('click', handleUserMessage);
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleUserMessage();
+    }
+  });
+
+  input.addEventListener('input', (e) => {
+    sendBtn.disabled = !e.target.value.trim();
+  });
 });
-document.getElementById('chatInput').addEventListener('input', (e) => {
-  document.getElementById('chatSendBtn').disabled = !e.target.value.trim();
-});
+
 
 function renderServices() {
   const container = document.getElementById('servicesContainer');
