@@ -519,23 +519,6 @@ function displayMsg(type, text) {
     content: text
   });
 }
-const API_URL = 'https://zyqtron-website.vercel.app/api/chat-zyqtron';
-
-async function sendToBot() {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: chatState.messages })
-  });
-
-  if (!res.ok) {
-    console.error('Erreur API', res.status);
-    return "Désolé, une erreur technique est survenue côté serveur.";
-  }
-
-  const data = await res.json();
-  return data.reply || "Désolé, je n'ai pas pu générer de réponse.";
-}
 
 // Ouvrir le chat automatiquement à l'arrivée sur la page
 document.addEventListener('DOMContentLoaded', () => {
@@ -554,24 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-const API_URL = 'https://zyqtron-website.vercel.app/api/chat-zyqtron';
-async function sendToBot() {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: chatState.messages })
-  });
-
-  if (!res.ok) {
-    console.error('Erreur API', res.status);
-    return "Désolé, une erreur technique est survenue côté serveur.";
-  }
-
-  const data = await res.json();
-  return data.reply || "Désolé, je n'ai pas pu générer de réponse.";
-}
-
-
+const API_URL = 'https://lovely-monstera-6f3195.netlify.app/.netlify/functions/groq-chat';
 
 async function generateBotResponse(text) {
   const lowerText = text.toLowerCase();
@@ -607,17 +573,12 @@ Pour une vision détaillée de l’approche Zyqtron, vous pouvez aussi consulter
     return `Le <a href="/catalogue.complet.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Catalogue Complet Zyqtron</a> présente les 401 prestations avec filtres par THÈME.`;
   }
 
-   // Sinon : on envoie à l'API Vercel (qui elle-même parle à Groq)
+  // Sinon : on envoie à Groq via Netlify
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [
-          { role: 'system', content: "Tu es le Chat Zyqtron, assistant commercial et diagnostic." },
-          { role: 'user', content: text }
-        ]
-      })
+      body: JSON.stringify({ message: text })
     });
 
     if (!res.ok) {
@@ -632,7 +593,6 @@ Pour une vision détaillée de l’approche Zyqtron, vous pouvez aussi consulter
     return "Impossible de joindre le service pour le moment. Vérifiez votre connexion ou réessayez plus tard.";
   }
 }
-
 
 async function handleUserMessage() {
   const input = document.getElementById('chatInput');
@@ -653,32 +613,21 @@ async function handleUserMessage() {
   }, 300);
 }
 
-
 // bouton et clavier utilisent TOUS handleUserMessage
 function chatSend() {
   handleUserMessage();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sendBtn = document.getElementById('chatSendBtn');
-  const input = document.getElementById('chatInput');
-
-  if (!sendBtn || !input) return;
-
-  sendBtn.addEventListener('click', handleUserMessage);
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleUserMessage();
-    }
-  });
-
-  input.addEventListener('input', (e) => {
-    sendBtn.disabled = !e.target.value.trim();
-  });
+document.getElementById('chatSendBtn').addEventListener('click', handleUserMessage);
+document.getElementById('chatInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    handleUserMessage();
+  }
 });
-
+document.getElementById('chatInput').addEventListener('input', (e) => {
+  document.getElementById('chatSendBtn').disabled = !e.target.value.trim();
+});
 
 function renderServices() {
   const container = document.getElementById('servicesContainer');
