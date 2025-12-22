@@ -24,21 +24,20 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'llama-3.1-70b-versatile',
+        model: 'llama-3.3-70b-versatile',
         messages: messages,
         temperature: 0.7,
         max_tokens: 800
       })
     });
 
-    // Afficher plus de détails en cas d'erreur
     if (!groqResponse.ok) {
       const errorText = await groqResponse.text();
       console.error('Erreur Groq API', groqResponse.status, errorText);
       return res.status(502).json({ 
         error: 'Erreur API Groq',
         status: groqResponse.status,
-        details: errorText.substring(0, 200) // Premiers 200 caractères
+        details: errorText.substring(0, 200)
       });
     }
 
