@@ -653,24 +653,6 @@ async function handleUserMessage() {
   }, 300);
 }
 
-async function handleUserMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-
-  input.value = '';
-  document.getElementById('chatSendBtn').disabled = true;
-
-  displayMsg('user', text);
-
-  const response = await generateBotResponse(text);
-
-  setTimeout(() => {
-    displayMsg('bot', response);
-    document.getElementById('chatSendBtn').disabled = false;
-    document.getElementById('chatInput').focus();
-  }, 300);
-}
 
 // bouton et clavier utilisent TOUS handleUserMessage
 function chatSend() {
