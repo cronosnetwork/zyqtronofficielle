@@ -519,6 +519,23 @@ function displayMsg(type, text) {
     content: text
   });
 }
+const API_URL = 'https://zyqtron-website.vercel.app/api/chat-zyqtron';
+
+async function sendToBot() {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: chatState.messages })
+  });
+
+  if (!res.ok) {
+    console.error('Erreur API', res.status);
+    return "Désolé, une erreur technique est survenue côté serveur.";
+  }
+
+  const data = await res.json();
+  return data.reply || "Désolé, je n'ai pas pu générer de réponse.";
+}
 
 // Ouvrir le chat automatiquement à l'arrivée sur la page
 document.addEventListener('DOMContentLoaded', () => {
@@ -537,7 +554,45 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-const API_URL = 'https://lovely-monstera-6f3195.netlify.app/.netlify/functions/groq-chat';
+const API_URL = 'https://zyqtron-website.vercel.app/api/chat-zyqtron';
+async function sendToBot() {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: chatState.messages })
+  });
+
+  if (!res.ok) {
+    console.error('Erreur API', res.status);
+    return "Désolé, une erreur technique est survenue côté serveur.";
+  }
+
+  const data = await res.json();
+  return data.reply || "Désolé, je n'ai pas pu générer de réponse.";
+}
+
+// Gestion de l'envoi du message utilisateur
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('chatInput');
+
+  if (!form || !input) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    displayMsg('user', text);
+    input.value = '';
+
+    (async () => {
+      const reply = await sendToBot();
+      displayMsg('bot', reply);
+    })();
+  });
+});
+
 
 async function generateBotResponse(text) {
   const lowerText = text.toLowerCase();
@@ -573,12 +628,17 @@ Pour une vision détaillée de l’approche Zyqtron, vous pouvez aussi consulter
     return `Le <a href="/catalogue.complet.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Catalogue Complet Zyqtron</a> présente les 401 prestations avec filtres par THÈME.`;
   }
 
-  // Sinon : on envoie à Groq via Netlify
+   // Sinon : on envoie à l'API Vercel (qui elle-même parle à Groq)
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: "Tu es le Chat Zyqtron, assistant commercial et diagnostic." },
+          { role: 'user', content: text }
+        ]
+      })
     });
 
     if (!res.ok) {
@@ -593,6 +653,7 @@ Pour une vision détaillée de l’approche Zyqtron, vous pouvez aussi consulter
     return "Impossible de joindre le service pour le moment. Vérifiez votre connexion ou réessayez plus tard.";
   }
 }
+
 
 async function handleUserMessage() {
   const input = document.getElementById('chatInput');
