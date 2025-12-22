@@ -572,28 +572,32 @@ Pour une vision détaillée de l’approche Zyqtron, vous pouvez aussi consulter
   } else if (lowerText.includes("catalogue") || lowerText.includes("liste") || lowerText.includes("401")) {
     return `Le <a href="/catalogue.complet.html" target="_blank" style="color:#D4A574; text-decoration:underline;">Catalogue Complet Zyqtron</a> présente les 401 prestations avec filtres par THÈME.`;
   }
-
-  // Sinon : on envoie à Groq via Netlify
+  // Sinon : on envoie à Groq via Vercel
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch('https://zyqtron-website.vercel.app/api/chat-zyqtron', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: "Tu es le Chat Zyqtron, assistant commercial expert en cybersécurité, actifs THKL, IA et stratégie GTM. Réponds de façon concise et professionnelle." },
+          { role: 'user', content: text }
+        ]
+      })
     });
 
     if (!res.ok) {
-      console.error('Erreur API Groq', res.status);
-      return "Je rencontre un problème technique avec l’API. Réessayez dans quelques instants.";
+      console.error('Erreur API', res.status);
+      return "Je rencontre un problème technique. Réessayez dans quelques instants.";
     }
 
     const data = await res.json();
-    return data.reply || "Je n’ai pas pu formuler de réponse exploitable.";
+    return data.reply || "Je n'ai pas pu formuler de réponse.";
   } catch (err) {
-    console.error('Erreur réseau Groq', err);
-    return "Impossible de joindre le service pour le moment. Vérifiez votre connexion ou réessayez plus tard.";
+    console.error('Erreur réseau', err);
+    return "Impossible de joindre le service pour le moment.";
   }
-}
 
+  
 async function handleUserMessage() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
